@@ -129,7 +129,7 @@ const Home = () => {
             </div> */}
             <div className='py-4 flex-row justify-evenly'>
                 <div className='w-full flex flex-row items-center text-center justify-between'>
-                    <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Recommended For You</h1>
+                    <h1 style={{fontSize: '20px', paddingBottom: '20px'}}>Recommended For You</h1>
                     <h1 style={{color: 'red', fontSize: '20px'}}>View All</h1>
                 </div>
                 {/* <ScrollCard /> */}

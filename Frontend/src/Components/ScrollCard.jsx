@@ -201,7 +201,8 @@ export   const ScrollCard = () => {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[200px]"
+              className="w-full object-contain  h-[200px]"
+              style={{resizeMode: 'contain'}}
               src={item.img}
             />
           </CardBody>
@@ -280,7 +281,8 @@ export   const BigScrollCard = () => {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[250px]"
+              className="w-full  object-contain h-[250px]"
+              style={{resizeMode: 'contain'}}
               src={item.img}
             />
           </CardBody>
@@ -360,7 +362,8 @@ export   const ndBigScrollCard = () => {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[350px]"
+              className="w-full object-contain  h-[350px]"
+              style={{resizeMode: 'contain'}}
               src={item.img}
             />
           </CardBody>
@@ -433,7 +436,7 @@ export  const IpadScrollCard = () =>  {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[200px]"
+              className="w-full object-contain h-[200px]"
               src={item.img}
             />
           </CardBody>
@@ -506,7 +509,7 @@ export  const PcScrollCard = () => {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[300px]"
+              className="w-full object-contain h-[300px]"
               src={item.img}
             />
           </CardBody>
@@ -578,7 +581,7 @@ export  const LargeScrollCard = () => {
               radius="lg"
               width="100%"
               alt={item.title}
-              className="w-full object-cover h-[350px]"
+              className="w-full object-contain h-[350px]"
               src={item.img}
             />
           </CardBody>

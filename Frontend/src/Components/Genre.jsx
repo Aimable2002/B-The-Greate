@@ -74,7 +74,7 @@ const Genre = () => {
           className='w-[50%] h-[100] bg-slate-50 flex items-center justify-center overflow-hidden rounded' // Set width to 30%
           style={{ 
             backgroundImage: `url(${image.src})`, 
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
             borderRadius: '10px'
           }}
         >

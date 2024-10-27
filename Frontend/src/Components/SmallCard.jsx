@@ -10,7 +10,7 @@ const SmallCard = () => {
             <img 
               src={OIPImage}
               alt="Movie Cover"
-              className="w-full object-cover rounded" // Adjusted height for larger images
+              className="w-full object-contain rounded" // Adjusted height for larger images
             />
             <h1 style={{fontSize: '14px'}} className='text-center'>Mark Wilson</h1> {/* Increased font size */}
             <i style={{fontSize: '12px'}} className='text-center'>Actress</i> {/* Increased font size */}

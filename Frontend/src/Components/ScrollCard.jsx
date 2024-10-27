@@ -205,7 +205,7 @@ export   const ScrollCard = () => {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-6">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>
@@ -284,7 +284,7 @@ export   const BigScrollCard = () => {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-6">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>
@@ -364,7 +364,7 @@ export   const ndBigScrollCard = () => {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-6">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>
@@ -436,7 +436,7 @@ export  const IpadScrollCard = () =>  {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-6">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>
@@ -508,7 +508,7 @@ export  const PcScrollCard = () => {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-2">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>
@@ -579,7 +579,7 @@ export  const LargeScrollCard = () => {
               src={item.img}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between">
+          <CardFooter className="text-small justify-between px-2">
             <b>{item.title}</b>
             <p className="text-default-500">{item.price}</p>
           </CardFooter>

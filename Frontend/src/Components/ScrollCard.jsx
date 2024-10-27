@@ -190,14 +190,13 @@ export   const ScrollCard = () => {
       link: '/view'
     },
   ];
-
+// 
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 -z-10">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card   key={index} isPressable onPress={() => navigate(item.link)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}
@@ -274,10 +273,9 @@ export   const BigScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card  key={index} isPressable onPress={() => navigate(item.link)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}
@@ -351,14 +349,13 @@ export   const ndBigScrollCard = () => {
       link: '/view'
     },
   ];
-
+//shadow="sm"
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card  key={index} isPressable onPress={() => navigate(item.link)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}
@@ -429,10 +426,9 @@ export  const IpadScrollCard = () =>  {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card  key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}
@@ -502,10 +498,9 @@ export  const PcScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-6">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}
@@ -574,10 +569,9 @@ export  const LargeScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-8">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
-              shadow="sm"
               radius="lg"
               width="100%"
               alt={item.title}

@@ -11,7 +11,7 @@ const FinalRate = () => {
     <div 
         className='w-full  bg-slate-50 flex items-center  overflow-hidden'
         style={{ 
-            backgroundImage: `url(${OIP})`, backgroundSize: 'cover' , height: `calc(100vh - 150px)`,
+            backgroundImage: `url(${OIP})`, backgroundSize: 'contain' , height: `calc(100vh - 150px)`,
             borderRadius: '10px'
         }}
     >

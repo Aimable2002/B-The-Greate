@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import ButtonAppBar from '../Components/Header'
 import SlideImage from '../Components/SlideImage'
 import Card from '../Components/Card'
-import  { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ScrollCard'
+import  { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard, BigScrollCard, ndBigScrollCard } from '../Components/ScrollCard'
 import MiniSlide from '../Components/MiniSlide'
 import SmallCard from '../Components/SmallCard'
 import FinalRate from '../Components/FinalRate'
@@ -14,15 +14,19 @@ const Home = () => {
 
     const handleResize = () => {
         const width = window.innerWidth;
-        if (width < 760) {
+        if (width > 0 && width < 370) {
             setDeviceType('mobile');
-        } else if (width < 1024) {
+        } else if (width > 370 && width < 450) {
+            setDeviceType('BigMobile');
+        }else if (width > 451 && width < 650){
+            setDeviceType('LargePhones')
+        } else if (width > 651 && width < 1024) {
             setDeviceType('ipad');
-        } else if (width < 1920) {
+        } else if (width > 1024 && width < 1920) {
             setDeviceType('pc');
         } else {
             setDeviceType('large');
-        }
+        }        
     };
 
     useEffect(() => {
@@ -38,6 +42,12 @@ const Home = () => {
     switch (deviceType) {
         case 'mobile':
             ScrollComponent = ScrollCard;
+            break;
+        case 'BigMobile': 
+            ScrollComponent = BigScrollCard;
+            break;
+        case 'LargePhones':
+            ScrollComponent = ndBigScrollCard
             break;
         case 'ipad':
             ScrollComponent = IpadScrollCard;

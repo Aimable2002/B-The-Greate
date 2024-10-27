@@ -144,49 +144,49 @@ export   const ScrollCard = () => {
     {
       title: "Orange",
       img: OrangeImg,
-      price: "$5.50",
+      price: "2hrs",
       link: '/view'
     },
     {
       title: "Tangerine",
       img: TangerineImg,
-      price: "$3.00",
+      price: "1hr",
       link: '/view'
     },
     {
       title: "Raspberry",
       img: RaspberryImg,
-      price: "$10.00",
+      price: "2hrs",
       link: '/view'
     },
     {
       title: "Lemon",
       img: LemonImg,
-      price: "$5.30",
+      price: "1hr",
       link: '/view'
     },
     {
       title: "Avocado",
       img: AvocadoImg,
-      price: "$15.70",
+      price: "3hrs",
       link: '/view'
     },
     {
       title: "Lemon 2",
       img: Lemon2Img,
-      price: "$8.00",
+      price: "1hr",
       link: '/view'
     },
     {
       title: "Banana",
       img: BananaImg,
-      price: "$7.50",
+      price: "1hr",
       link: '/view'
     },
     {
       title: "Watermelon",
       img: WatermelonImg,
-      price: "$12.20",
+      price: "2hrs",
       link: '/view'
     },
   ];
@@ -216,6 +216,165 @@ export   const ScrollCard = () => {
 }
 
 
+export   const BigScrollCard = () => {
+
+  const navigate = useNavigate()
+  const list = [
+    {
+      title: "Orange",
+      img: OrangeImg,
+      price: "2hrs",
+      link: '/view'
+    },
+    {
+      title: "Tangerine",
+      img: TangerineImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Raspberry",
+      img: RaspberryImg,
+      price: "2hrs",
+      link: '/view'
+    },
+    {
+      title: "Lemon",
+      img: LemonImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Avocado",
+      img: AvocadoImg,
+      price: "3hrs",
+      link: '/view'
+    },
+    {
+      title: "Lemon 2",
+      img: Lemon2Img,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Banana",
+      img: BananaImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Watermelon",
+      img: WatermelonImg,
+      price: "2hrs",
+      link: '/view'
+    },
+  ];
+
+  return (
+    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+      {list.map((item, index) => (
+        <Card shadow="sm" key={index} isPressable onPress={() => console.log('Big Phones')}>
+          <CardBody className="overflow-visible p-0">
+            <Image
+              shadow="sm"
+              radius="lg"
+              width="100%"
+              alt={item.title}
+              className="w-full object-cover h-[250px]"
+              src={item.img}
+            />
+          </CardBody>
+          <CardFooter className="text-small justify-between">
+            <b>{item.title}</b>
+            <p className="text-default-500">{item.price}</p>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+
+
+export   const ndBigScrollCard = () => {
+
+  const navigate = useNavigate()
+  const list = [
+    {
+      title: "Orange",
+      img: OrangeImg,
+      price: "2hrs",
+      link: '/view'
+    },
+    {
+      title: "Tangerine",
+      img: TangerineImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Raspberry",
+      img: RaspberryImg,
+      price: "2hrs",
+      link: '/view'
+    },
+    {
+      title: "Lemon",
+      img: LemonImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Avocado",
+      img: AvocadoImg,
+      price: "3hrs",
+      link: '/view'
+    },
+    {
+      title: "Lemon 2",
+      img: Lemon2Img,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Banana",
+      img: BananaImg,
+      price: "1hr",
+      link: '/view'
+    },
+    {
+      title: "Watermelon",
+      img: WatermelonImg,
+      price: "2hrs",
+      link: '/view'
+    },
+  ];
+
+  return (
+    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+      {list.map((item, index) => (
+        <Card shadow="sm" key={index} isPressable onPress={() => console.log('Large Phones')}>
+          <CardBody className="overflow-visible p-0">
+            <Image
+              shadow="sm"
+              radius="lg"
+              width="100%"
+              alt={item.title}
+              className="w-full object-cover h-[350px]"
+              src={item.img}
+            />
+          </CardBody>
+          <CardFooter className="text-small justify-between">
+            <b>{item.title}</b>
+            <p className="text-default-500">{item.price}</p>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+
 
 
 export  const IpadScrollCard = () =>  {
@@ -223,49 +382,49 @@ export  const IpadScrollCard = () =>  {
     {
       title: "Orange",
       img: OrangeImg,
-      price: "$5.50",
+      price: "2hrs",
     },
     {
       title: "Tangerine",
       img: TangerineImg,
-      price: "$3.00",
+      price: "1hr",
     },
     {
       title: "Raspberry",
       img: RaspberryImg,
-      price: "$10.00",
+      price: "2hrs",
     },
     {
       title: "Lemon",
       img: LemonImg,
-      price: "$5.30",
+      price: "1hr",
     },
     {
       title: "Avocado",
       img: AvocadoImg,
-      price: "$15.70",
+      price: "3hrs",
     },
     {
       title: "Lemon 2",
       img: Lemon2Img,
-      price: "$8.00",
+      price: "1hr",
     },
     {
       title: "Banana",
       img: BananaImg,
-      price: "$7.50",
+      price: "1hr",
     },
     {
       title: "Watermelon",
       img: WatermelonImg,
-      price: "$12.20",
+      price: "2hrs",
     },
   ];
 
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed")}>
+        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed ipad")}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"
@@ -295,42 +454,42 @@ export  const PcScrollCard = () => {
     {
       title: "Orange",
       img: OrangeImg,
-      price: "$5.50",
+      price: "2hrs",
     },
     {
       title: "Tangerine",
       img: TangerineImg,
-      price: "$3.00",
+      price: "1hr",
     },
     {
       title: "Raspberry",
       img: RaspberryImg,
-      price: "$10.00",
+      price: "2hrs",
     },
     {
       title: "Lemon",
       img: LemonImg,
-      price: "$5.30",
+      price: "1hr",
     },
     {
       title: "Avocado",
       img: AvocadoImg,
-      price: "$15.70",
+      price: "3hrs",
     },
     {
       title: "Lemon 2",
       img: Lemon2Img,
-      price: "$8.00",
+      price: "1hr",
     },
     {
       title: "Banana",
       img: BananaImg,
-      price: "$7.50",
+      price: "1hr",
     },
     {
       title: "Watermelon",
       img: WatermelonImg,
-      price: "$12.20",
+      price: "2hrs",
     },
   ];
 
@@ -366,42 +525,42 @@ export  const LargeScrollCard = () => {
     {
       title: "Orange",
       img: OrangeImg,
-      price: "$5.50",
+      price: "2hrs",
     },
     {
       title: "Tangerine",
       img: TangerineImg,
-      price: "$3.00",
+      price: "1hr",
     },
     {
       title: "Raspberry",
       img: RaspberryImg,
-      price: "$10.00",
+      price: "2hrs",
     },
     {
       title: "Lemon",
       img: LemonImg,
-      price: "$5.30",
+      price: "1hr",
     },
     {
       title: "Avocado",
       img: AvocadoImg,
-      price: "$15.70",
+      price: "3hrs",
     },
     {
       title: "Lemon 2",
       img: Lemon2Img,
-      price: "$8.00",
+      price: "1hr",
     },
     {
       title: "Banana",
       img: BananaImg,
-      price: "$7.50",
+      price: "1hr",
     },
     {
       title: "Watermelon",
       img: WatermelonImg,
-      price: "$12.20",
+      price: "2hrs",
     },
   ];
 

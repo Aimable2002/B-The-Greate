@@ -5,6 +5,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '../Drower/Menu';
+import { Link } from 'react-router-dom';
 
 export default function ButtonAppBar() {
     const [invisible, setInvisible] = React.useState(false);
@@ -24,7 +25,7 @@ export default function ButtonAppBar() {
         <div className=' flex justify-between w-full items-center'>
         <div className='flex flex-row gap-1'>
             <h1 style={{color: 'red'}}>B</h1>
-            <h1 style={{color: 'red'}}>Agasobanuye</h1>
+            <Link to='/'><h1 style={{color: 'red'}}>Agasobanuye</h1></Link>
         </div>
         <div className='flex justify-between gap-6'>
             <i><SearchIcon /></i>

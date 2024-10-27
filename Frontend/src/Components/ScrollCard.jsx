@@ -273,7 +273,7 @@ export   const BigScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log('Big Phones')}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"
@@ -353,7 +353,7 @@ export   const ndBigScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log('Large Phones')}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"
@@ -378,6 +378,8 @@ export   const ndBigScrollCard = () => {
 
 
 export  const IpadScrollCard = () =>  {
+
+  const navigate = useNavigate()
   const list = [
     {
       title: "Orange",
@@ -424,7 +426,7 @@ export  const IpadScrollCard = () =>  {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed ipad")}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"
@@ -450,6 +452,7 @@ export  const IpadScrollCard = () =>  {
 
 
 export  const PcScrollCard = () => {
+  const navigate = useNavigate()
   const list = [
     {
       title: "Orange",
@@ -496,7 +499,7 @@ export  const PcScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-6">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed")}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"
@@ -521,6 +524,7 @@ export  const PcScrollCard = () => {
 
 
 export  const LargeScrollCard = () => {
+  const navigate = useNavigate()
   const list = [
     {
       title: "Orange",
@@ -567,7 +571,7 @@ export  const LargeScrollCard = () => {
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-8">
       {list.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed")}>
+        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)}>
           <CardBody className="overflow-visible p-0">
             <Image
               shadow="sm"

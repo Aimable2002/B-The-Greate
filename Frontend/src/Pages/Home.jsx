@@ -81,21 +81,31 @@ const Home = () => {
             { isSmallScreen ? <SlideImage /> : null}
         </div>
         <div className='px-4 py-4 z-0'>
-            <h1>Top 10 Movies To Watch</h1>
+            <h1 style={{fontSize: '30px'}} className='py-4'>Top 10 Movies To Watch</h1>
             <div className='py-4 flex-row justify-evenly'>
                 {/* <Card /> */}
                 {/* <ScrollCard /> */}
                 {/* {isSmallScreen ? <ScrollCard /> : <IpadScrollCard /> : <PcScrollCard /> : <LargeScrollCard />} */}
+                
                 <ScrollComponent />
-                <div className='w-full flex flex-row justify-between'>
-                    <h1>Only On Streamit</h1>
-                    <h1 style={{color: 'red'}}>View All</h1>
-                </div>
+                
             </div>
+
             <div className='py-4 flex-row justify-evenly'>
                 {/* <ScrollCard /> */}
+                <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
+                    <h1 style={{fontSize: '30px'}}>Only On Streamit</h1>
+                    <h1 style={{color: 'red', fontSize: '20px'}}>View All</h1>
+                </div>
                 <ScrollComponent />
-                <h1>Upcoming Movies</h1>
+                
+            </div>
+
+            <div className='py-4 flex-row justify-evenly'>
+                {/* <ScrollCard /> */}
+                <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Upcoming Movies</h1>
+                <ScrollComponent />
+                
             </div>
             <div className='py-4'>
                 {isSmallScreen ? <MiniSlide /> : null}
@@ -105,12 +115,12 @@ const Home = () => {
                 <SmallCard />
             </div> */}
             <div className='py-4 flex-row justify-evenly'>
-                <h1>Popular</h1>
+                <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Popular</h1>
                 {/* <ScrollCard /> */}
                 <ScrollComponent />
             </div>
             <div className='py-4 flex-row justify-evenly'>
-                <h1>Popular</h1>
+                {/* <h1>Popular</h1> */}
                 {isSmallScreen ? <FinalRate /> : null}
             </div>
             {/* <div className='py-4 flex-row justify-evenly'>
@@ -118,26 +128,26 @@ const Home = () => {
                 <Genre />
             </div> */}
             <div className='py-4 flex-row justify-evenly'>
-                <div className='w-full flex flex-row justify-between'>
-                    <h1>Recommended For You</h1>
-                    <h1 style={{color: 'red'}}>View All</h1>
+                <div className='w-full flex flex-row items-center text-center justify-between'>
+                    <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Recommended For You</h1>
+                    <h1 style={{color: 'red', fontSize: '20px'}}>View All</h1>
                 </div>
                 {/* <ScrollCard /> */}
                 <ScrollComponent />
             </div>
 
-            <div className='py-4 flex-row justify-evenly'>
+            {/* <div className='py-4 flex-row justify-evenly'>
                 <div className='w-full flex flex-row justify-between'>
                     <h1>Only On Streamit</h1>
                     <h1 style={{color: 'red'}}>View All</h1>
                 </div>
-                {/* <ScrollCard /> */}
+                {/* <ScrollCard /> 
                 <ScrollComponent />
-            </div>
+            </div> */}
 
             <div className='py-4 flex-row justify-evenly'>
-                <div className='w-full flex flex-row justify-between'>
-                    <h1>Top Picks For You</h1>
+                <div className='w-full flex flex-row items-center justify-between'>
+                    <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Top Picks For You</h1>
                     <h1 style={{color: 'red'}}>View All</h1>
                 </div>
                 {/* <ScrollCard /> */}

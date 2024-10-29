@@ -9,7 +9,7 @@ const useGetMovies = () => {
         const fetchMovies = async () => {
           try {
             setLoading(true);
-            const res = await axios.get('http://localhost:3000/api/movies');
+            const res = await axios.get('/api/movies');
             const data = res.data;
       
             if (!data) {

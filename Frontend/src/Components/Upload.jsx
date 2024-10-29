@@ -64,7 +64,7 @@ const Upload = () => {
         console.log('FormData 2:', Array.from(formData2.entries()));
 
         try {
-            const response1 = await fetch('http://localhost:3000/api/upload', {
+            const response1 = await fetch('https://b-the-greate.onrender.com/api/upload', {
                 method: 'POST',
                 body: formData,
             });

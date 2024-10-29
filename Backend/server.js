@@ -5,6 +5,10 @@ import bodyParser from "body-parser";
 import path from 'path'
 import connectDB from "./connectDb/connectDB.js";
 import connectCloud from "./Cloudinary/connectCloud.js";
+import UploadRoute from './Router/UploadRoute.js'
+
+import authRouter from './Router/authRauter.js'
+import movieRouter from './Router/moviesRouter.js'
 
 
 const app = express()
@@ -20,6 +24,11 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(cors())
+
+
+app.use('/api/upload', UploadRoute)
+app.use('/api/auth', authRouter)
+app.use('/api/movies', movieRouter)
 
 
 app.use(express.static(path.join(__dirname, "Frontend", "dist")))

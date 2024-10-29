@@ -1,33 +1,96 @@
+import multer from "multer";
+import {v2 as cloudinary} from "cloudinary";
+import Movies from "../Modal/MoviesModel.js";
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
+// cloudinary.config({
+//     cloud_name: 'your_cloud_name',
+//     api_key: 'your_api_key',
+//     api_secret: 'your_api_secret',
+// });
 
-// Upload an image
-const uploadResult = await cloudinary.uploader
-.upload(
-    'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-        public_id: 'shoes',
+const uploadToCloudinary = (buffer, folderName) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { resource_type: 'image', folder: folderName },
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+        stream.end(buffer);
+    });
+};
+
+export const uploadImage = async (req, res) => {
+    try {
+        console.log('Received text data:', req.body);
+        console.log('Received files:', req.files);
+
+        const {Name, Duration, Studio, Production_Company, Description, Released_Date, Trailor, Download } = req.body
+
+        if(!Name || !Duration || !Studio || !Production_Company || !Description || !Released_Date || !Trailor || !Download ){
+            return res.status(400).json({error : 'fill the field'})
+        }
+
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).json({ error: 'No files were uploaded.' });
+        }
+
+        const folderName = 'profile_upload';
+        const uploadPromises = [];
+
+        for (const key in req.files) {
+            for (const file of req.files[key]) {
+                if (file.buffer) {
+                    console.log(`Preparing to upload: ${file.originalname}`);
+                    uploadPromises.push(uploadToCloudinary(file.buffer, folderName));
+                } else {
+                    console.error(`Buffer not found for file: ${file.originalname}`);
+                }
+            }
+        }
+
+        const results = await Promise.all(uploadPromises);
+        console.log('Upload Results:', results);
+
+        if (results.length < 2) {
+            return res.status(400).json({ error: 'Both images must be uploaded.' });
+        }
+
+        // Assign small and large image URLs
+        const smallImageUrl = results[0].secure_url; // Assuming first image is small
+        const largeImageUrl = results[1].secure_url;
+
+            const newMovie = new Movies({
+                movieTitle: Name,
+                Duration,
+                Studio,
+                ProductionCompany: Production_Company,
+                Description,
+                Released_date: Released_Date,
+                Trailor,
+                Download,
+                SmallImage: smallImageUrl, // Correct assignment
+                LargeImage: largeImageUrl
+            });
+                
+            await newMovie.save();
+                
+            return res.status(200).json({
+                message: 'Images uploaded successfully',
+                movie: newMovie, // Optional: return the newly created movie document
+            });
+
+    } catch (error) {
+        console.log('Internal server error:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
-)
-.catch((error) => {
-    console.log(error);
-});
+};
 
-console.log(uploadResult);
 
-// Optimize delivery by resizing and applying auto-format and auto-quality
-const optimizeUrl = cloudinary.url('shoes', {
- fetch_format: 'auto',
- quality: 'auto'
-});
-
-console.log(optimizeUrl);
-
-// Transform the image: auto-crop to square aspect_ratio
-const autoCropUrl = cloudinary.url('shoes', {
- crop: 'auto',
- gravity: 'auto',
- width: 500,
- height: 500,
-});
-
-console.log(autoCropUrl); 

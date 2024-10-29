@@ -3,6 +3,12 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import View from './Pages/View'
+// import Signs from './Pages/Register'
+// import SignInPage from './Pages/signin'
+import SignUpPage from './Pages/signup'
+import Dashboard from './Pages/Dashboard'
+import Signup from './Pages/signup'
+import Login from './Pages/Login'
 
 function App() {
 
@@ -23,13 +29,21 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/view' element={<View />} />
+          {/* <Route path='/login' element={<SignInPage />} /> */}
+          <Route path='/signup' element={<SignUpPage />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/Register' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       ) : (
-        <div className='w-flex items-center justify-center flex-1'>
+        <div className='w-flex items-center text-center justify-center flex-1'>
           <h1>
           iPads, PCs, and large TV screens are still in development.
             Use Smart Phones
           </h1>
+          {/* <Routes>
+            <Route path='sign' element={<Signs />} />
+          </Routes> */}
         </div>
       )}
     </div>

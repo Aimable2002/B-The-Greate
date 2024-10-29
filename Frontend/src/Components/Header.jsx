@@ -39,7 +39,9 @@ export default function ButtonAppBar() {
                 label="Show Badge"
                 /> */}
             </i>
-            <i><PersonIcon /></i>
+            <Link to='/dashboard'>
+                <i><PersonIcon /></i>
+            </Link>
             <i onClick={toggleMenu}><MenuIcon /></i>
         </div>
         </div>

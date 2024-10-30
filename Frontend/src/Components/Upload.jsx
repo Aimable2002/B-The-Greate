@@ -2,6 +2,7 @@
 import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
 
+
 const Upload = () => {
     const addRef1 = useRef();
     const addRef2 = useRef();
@@ -15,7 +16,8 @@ const Upload = () => {
         Description: '',
         Released_Date: '',
         Trailor: '', 
-        Download: ''
+        Download: '',
+        Category: ''
     });
 
     const handleFileRef1 = () => {
@@ -44,7 +46,7 @@ const Upload = () => {
         const { name, value } = e.target;
         setInput(prev => ({ ...prev, [name]: value }));
     };
-
+    const [updateState, setUpdateState] = useState(null)
     const handleSubmit = async () => {
         const formData = new FormData();
         for (const key in input) {
@@ -64,6 +66,7 @@ const Upload = () => {
         console.log('FormData 2:', Array.from(formData2.entries()));
 
         try {
+            setUpdateState(null);
             const response1 = await fetch('https://b-the-greate.onrender.com/api/upload', {
                 method: 'POST',
                 body: formData,
@@ -74,11 +77,19 @@ const Upload = () => {
             // });
 
             console.log('Text Upload successful:', response1);
-            // console.log('File Upload successful:', response2);
+            setUpdateState(response1.status)
+            console.log('File Upload successful:', response1.status);
         } catch (error) {
             console.error('Error uploading:', error);
+            // setUpdateState('fail');
         }
     };
+    const statusMessage = updateState === null 
+        ? '' 
+        : updateState === 'true' 
+            ? 'Upload successful' 
+            : 'Upload';
+
 
     return (
         <div className='w-[100%] flex flex-col flex-1'>
@@ -151,6 +162,20 @@ const Upload = () => {
                    />
                </label>
            ))}
+
+<select 
+                        name="Category" 
+                        className="select select-bordered w-full" 
+                        value={input.Category} 
+                        onChange={handleChange}
+                    >
+                        <option value="" disabled>Select category</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Action">Action</option>
+                        <option value="Thrill">Thrill</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Adventure">Adventure</option>
+                    </select>
        </div>
 
             <div className='w-full flex flex-col gap-4 mt-4'>
@@ -175,7 +200,7 @@ const Upload = () => {
                         onChange={(e) => handleUpload(e, 1)}
                     />
                 </div>
-                <Button size='xxlg' onClick={handleSubmit}>Upload</Button>
+                <Button size='xxlg' onClick={handleSubmit}>Upload : {statusMessage}</Button>
             </div>
         </div>
     );

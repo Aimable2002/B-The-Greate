@@ -29,6 +29,12 @@ const SlideImage = () => {
     const currentMovie = movies[currentIndex] || {};
 
     return (
+        <>
+      {loading ? (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+                    <h1 className="text-white">Loading Movies...</h1>
+                </div>
+            ) : (
         <div className='relative w-full overflow-hidden' style={{ height: `calc(100vh - 150px)`, borderRadius: '10px' }}>
             <img
                 src={currentMovie.SmallImage} 
@@ -64,6 +70,8 @@ const SlideImage = () => {
                 </div>
             </div>
         </div>
+            )}
+            </>
     );
 }
 

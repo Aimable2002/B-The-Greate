@@ -30,9 +30,9 @@ export default function ButtonAppBar() {
         <div className='flex justify-between gap-6'>
             <i><SearchIcon /></i>
             <i>
-            <Badge color="secondary" variant="dot" invisible={invisible}>
+            {/* <Badge color="secondary" variant="dot" invisible={invisible}>
                 <NotificationsIcon checked={!invisible} onChange={handleBadgeVisibility}/>
-            </Badge>
+            </Badge> */}
                 {/* <FormControlLabel
                 sx={{ color: 'text.primary' }}
                 control={<Switch  />}

@@ -8,6 +8,7 @@ import SmallCard from '../Components/SmallCard'
 import FinalRate from '../Components/FinalRate'
 import Genre from '../Components/Genre'
 import Footer from '../Components/Footer'
+import useGetMovies from '../hook/useGetMovies'
 
 const Home = () => {
     const [deviceType, setDeviceType] = useState(''); 
@@ -70,9 +71,15 @@ const Home = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  const {loading, movies} = useGetMovies()
   return (
-    <div className='w-full flex flex-col overflow-auto'>
+    <>
+    {loading ? (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+                    <h1 className="text-white">Loading Movies...</h1>
+                </div>
+            ) : (
+        <div className='w-full flex flex-col overflow-auto'>
         <div className='top-0 left-0 right-0 px-4 py-4 flex justify-between items-center fixed z-10' style={{ backgroundColor: '#0F0F0F' }}>
             <ButtonAppBar />
         </div>
@@ -158,6 +165,8 @@ const Home = () => {
             <Footer />
         </div>
     </div>
+    )}
+    </>
   )
 }
 

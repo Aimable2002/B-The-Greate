@@ -8,9 +8,12 @@ export default defineConfig({
     port: 4000,
     proxy: {
       '/api': {
-        target: 'https://b-the-greate.onrender.com/',
+        target: 'https://b-the-greate.onrender.com',
         changeOrigin: true
       }
     }
-  }
+  },
+  optimizeDeps: {
+    exclude: ['events', 'fs', 'buffer'], // Exclude problematic modules
+  },
 })

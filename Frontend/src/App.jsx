@@ -28,7 +28,7 @@ function App() {
       {isSmallScreen ? (
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/view' element={<View />} />
+          <Route path='/view/:id' element={<View />} />
           {/* <Route path='/login' element={<SignInPage />} /> */}
           <Route path='/signup' element={<SignUpPage />} />
           <Route path='/dashboard' element={<Dashboard />} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
+import {Card, CardBody, CardFooter, Image, Button} from "@nextui-org/react";
 import {useNavigate} from 'react-router-dom'
 import useGetMovies from "../hook/useGetMovies";
 import SkeletonColor from "../Skeleton/CardSkeleton";
@@ -7,66 +7,20 @@ import SkeletonColor from "../Skeleton/CardSkeleton";
 
 
 
-export   const ScrollCard = () => {
+export   const ScrollCard = ({ movies, onImageClick }) => {
 
-  const {loading, movies } = useGetMovies() 
+const {loading } = useGetMovies() 
 
-  const navigate = useNavigate()
-  
-  
-  const handleNovigate = (id) => {
+const navigate = useNavigate()
 
-    console.log('_id :', id)
+const NewonImageClick = (id) => {
+    console.log('clicked')
     localStorage.setItem('CM', JSON.stringify(id))
-    navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+    onImageClick(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  }
-  return (
-    <>
-      {loading ? (
-                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-                    <h1 className="text-white">Loading Movies...</h1>
-                </div>
-            ) : (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 -z-10">
-      {loading ? null : !loading && movies.length === 0 ? <h1>??</h1> : movies.map((item, index) => (
-        <Card   key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
-          <CardBody className="overflow-visible p-0">
-            <Image
-              // radius="lg"
-              width="100%"
-              alt={item.movieTitle}
-              className="w-full object-contain  h-[200px]"
-              style={{resizeMode: 'contain'}}
-              src={item.SmallImage}
-            />
-          </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
-            )}
-            </>
-  );
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
 }
-
-
-export   const BigScrollCard = () => {
-
-  const {loading, movies } = useGetMovies()
-
-  const navigate = useNavigate()
-
-  const handleNovigate = (id) => {
-
-    console.log('_id :', id)
-    localStorage.setItem('CM', JSON.stringify(id))
-    navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
-
-  }
 
   return (
     <>
@@ -76,8 +30,61 @@ export   const BigScrollCard = () => {
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {loading ? null  : !loading && movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
-        <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
+
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> : movies.map((item, index) => (
+        <Card   key={item._id} isPressable onPress={() => NewonImageClick(item)} className="bg-black border-none">
+          <CardBody className="overflow-visible p-0">
+            <Image
+              // radius="lg"
+              width="100%"
+              alt={item.movieTitle}
+              className="w-full object-contain  h-[200px]"
+              style={{resizeMode: 'contain'}}
+              src={item.SmallImage}
+              onPress={() => NewonImageClick(item)}
+            />
+          </CardBody>
+          <CardFooter className="text-small flex flex-col justify-around px-6">
+            <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p>
+          </CardFooter>
+        </Card>
+      ))} 
+    </div>
+  )}
+    </>
+  );
+}
+
+
+export   const BigScrollCard = ({ movies, onImageClick }) => {
+
+//   const {loading, movies } = useGetMovies()
+
+const navigate = useNavigate()
+
+const {loading} = useGetMovies()
+
+const NewonImageClick = (id) => {
+    console.log('clicked')
+    localStorage.setItem('CM', JSON.stringify(id))
+    onImageClick(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
+
+  return (
+    <>
+      {loading ? (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+                    <h1 className="text-white">Loading Movies...</h1>
+                </div>
+            ) : (
+    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+        <Card  key={item._id} isPressable onPress={() => NewonImageClick (item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
               // radius="lg"
@@ -102,23 +109,25 @@ export   const BigScrollCard = () => {
 
 
 
-export   const ndBigScrollCard = () => {
+export   const ndBigScrollCard = ({ movies, onImageClick }) => {
 
 
-  const {loading, movies } = useGetMovies()
+//   const {loading, movies } = useGetMovies()
+  const {loading} = useGetMovies()
 
   const navigate = useNavigate()
 
-  const handleNovigate = (id) => {
-
-    console.log('_id :', id)
+  const NewonImageClick = (id) => {
+    console.log('clicked')
     localStorage.setItem('CM', JSON.stringify(id))
-    navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+    onImageClick(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  }
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
 
 
-//shadow="sm"
+  
   return (
     <>
       {loading ? (
@@ -126,10 +135,10 @@ export   const ndBigScrollCard = () => {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
-    
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {loading ? null : !loading && movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
-        <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
+
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+        <Card  key={item._id} isPressable onPress={() => NewonImageClick(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
               // radius="lg"

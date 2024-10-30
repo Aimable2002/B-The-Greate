@@ -32,14 +32,14 @@ export const uploadImage = async (req, res) => {
         console.log('Received text data:', req.body);
         console.log('Received files:', req.files);
 
-        const {Name, Duration, Studio, Production_Company, Description, Released_Date, Trailor, Download } = req.body
+        const {Name, Duration, Studio, Production_Company, Category, Description, Released_Date, Trailor, Download } = req.body
 
-        if(!Name || !Duration || !Studio || !Production_Company || !Description || !Released_Date || !Trailor || !Download ){
-            return res.status(400).json({error : 'fill the field'})
+        if(!Name || !Duration || !Studio || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download ){
+            return res.status(400).json({error : 'fill the field', status: false})
         }
 
         if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(400).json({ error: 'No files were uploaded.' });
+            return res.status(401).json({ error: 'No files were uploaded.', status:false });
         }
 
         const folderName = 'profile_upload';
@@ -60,7 +60,7 @@ export const uploadImage = async (req, res) => {
         console.log('Upload Results:', results);
 
         if (results.length < 2) {
-            return res.status(400).json({ error: 'Both images must be uploaded.' });
+            return res.status(403).json({ error: 'Both images must be uploaded.', status: false });
         }
 
         // Assign small and large image URLs
@@ -76,6 +76,7 @@ export const uploadImage = async (req, res) => {
                 Released_date: Released_Date,
                 Trailor,
                 Download,
+                Category,
                 SmallImage: smallImageUrl, // Correct assignment
                 LargeImage: largeImageUrl
             });
@@ -84,12 +85,13 @@ export const uploadImage = async (req, res) => {
                 
             return res.status(200).json({
                 message: 'Images uploaded successfully',
+                status: true,
                 movie: newMovie, // Optional: return the newly created movie document
             });
 
     } catch (error) {
         console.log('Internal server error:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error', status: false});
     }
 };
 

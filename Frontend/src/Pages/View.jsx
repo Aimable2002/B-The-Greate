@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import ButtonAppBar from '../Components/Header'
-import LImage from '../assets/large.jpg'
 import { Button, Image } from '@nextui-org/react'
 import Rating from '@mui/material/Rating';
-import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ScrollCard';
+import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ndScrollCard';
 import Footer from '../Components/Footer';
+import useGetMovies from '../hook/useGetMovies';
 
 const View = () => {
 
@@ -51,51 +51,96 @@ const View = () => {
             ScrollComponent = ScrollCard; 
     }
 
+    const {loading, movies} = useGetMovies()
+
+    // const {id} = useParams()
+
+    const id = JSON.parse(localStorage.getItem('CM'))
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [currentMovie, setCurrentMovie] = useState(null);
+
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const handlePlay = () => {
+        setIsPlaying(true); // Update state to show video
+        // You can also add additional logic here, like logging the play action
+        console.log(`Clicked _id: ${id._id}`);
+    };
+
+    
+      // Use storedMovie if selectedMovie is not set
+    //   const currentMovie = selectedMovie || id;
+
+    const getVideoIdFromUrl = (url) => {
+        const urlObj = new URL(url);
+        return urlObj.searchParams.get('v');
+    };
+
+    const videoId = getVideoIdFromUrl(id.Trailor);
+
+    console.log('Trailor :', id.Trailor)
+
+
   return (
     <div className='w-full flex flex-col overflow-auto'>
-        <div className='top-0 left-0 right-0 px-4 py-4 flex justify-between items-center fixed z-10' style={{ backgroundColor: '#0F0F0F' }}>
+        <div className='top-0 left-0 right-0 px-4 py-4 flex justify-between items-center fixed z-20' style={{ backgroundColor: '#0F0F0F' }}>
             <ButtonAppBar />
         </div>
         <div className='py-4 px-4 mt-12 flex flex-col'>
-            <Image
+
+        {isPlaying ? (
+                    <iframe
+                    className="w-full h-[200px]"
+                    src= {id.Trailor} // 'https://www.youtube.com/embed/1Q8fG0TtVAY?si=xsEpZSMGPXLlwT10'// // Use the extracted video ID
+                    title={id.movieTitle}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+                ) : (
+
+            <img
                 shadow="sm"
                 radius="lg"
                 width="100%"
-                alt='large image'
+                alt={id.LargeImage}
                 className="w-full object-cover h-[200px]"
-                src={LImage}
+                src={id.LargeImage}
             />
-            <h1 style={{fontSize: '20px'}} className='py-4'>The Big Bung</h1>
+
+                )}
+            <h1 style={{fontSize: '20px'}} className='py-4'>{id.movieTitle || ''}</h1>
             <div className='w-full flex flex-row gap-4 items-center'>
                 <Rating name="read-only" value={value} readOnly />
                 <i>4.5</i>
                     <p className=' px-2 py-2 bg-amber-300 text-black' style={{borderRadius: '4px'}}>BTHG</p>
                     {/* <i>1h:58mins</i> */}
-                    <Button color='primary'>Play Now</Button>
+                    <Button color='primary'onPress={() => handlePlay(`clicke _id : ${id._id}`)}>Play Now</Button>
             </div>
             <div className='w-full py-4 flex flex-row gap-2'>
                 <h1>Action</h1>
-                <i>2hr: 20mins</i>
+                <i>{id.Duration || ''}</i>
                 <h1>  .  </h1>
-                <h1> Sept 2020</h1>
+                <h1> {id.Released_date || ''}</h1>
             </div>
             <div className='w-full flex flex-row gap-4'>
-                <h1>TAGS:  </h1>
+                <h1 className='text-red-600'>TAGS:  </h1>
                 <h1>Action</h1>
                 <h1>Assasins</h1>
                 <h1>Thrill</h1>
                 <h1>Advanture</h1>
             </div>
             <p className='py-4'>
-                When a rogue army of humans kills Caesar’s wife and son, he sets out to exact revenge. But his quest for retribution reveals his darker instincts even as he makes a startling discovery.
+                {id.Description || ''}
             </p>
-            <div className='w-full flex flex-col'>
-                <h1 style={{paddingBottom: '20px'}}>Related Movies</h1>
-                <ScrollComponent />
-            </div>
+            {/* <div className='w-full flex flex-col'> */}
+                <h1 style={{paddingBottom: '20px'}}>Newest Movies</h1>
+                <ScrollComponent movies={movies} onImageClick={setCurrentMovie}/>
+            {/* </div> */}
             <div className='w-full py-4 flex flex-col'>
-                <h1 style={{paddingBottom: '20px'}}>Upcoming</h1>
-                <ScrollComponent />
+                <h1 style={{paddingBottom: '20px'}}>Recommended</h1>
+                <ScrollComponent movies={movies} onImageClick={setCurrentMovie}/>
             </div>
             <div style={{paddingTop: '20px'}}>
                 <Footer />

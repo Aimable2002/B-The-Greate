@@ -5,15 +5,21 @@ const useGetMovies = () => {
     const [loading, setLoading] = useState(false)
     const [movies, setMovies] = useState([])
 
+    const [updateStatus, setUpdateStatus] = useState(null)
+
     useEffect(() => {
         const fetchMovies = async () => {
           try {
             setLoading(true);
-            const res = await axios.get('/api/movies');
+            const res = await axios.get('https://b-the-greate.onrender.com/api/movies');
             const data = res.data;
       
             if (!data) {
               throw new Error('Missing data');
+            }
+
+            if(data && data.status){
+              setUpdateStatus(data.status)
             }
     
             setMovies(data);

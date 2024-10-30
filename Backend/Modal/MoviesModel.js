@@ -9,7 +9,6 @@ const moviesSchema = new mongoose.Schema({
     Duration: {
         type: String,
         require: true,
-        unique: true
     },
     Studio: {
         type: String,
@@ -32,6 +31,10 @@ const moviesSchema = new mongoose.Schema({
         require: true
     },
     Download: {
+        type: String,
+        require: true,
+    },
+    Category: {
         type: String,
         require: true,
     },

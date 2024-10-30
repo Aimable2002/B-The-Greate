@@ -18,7 +18,7 @@ export default function SkeletonColor() {
         variant="rectangular"
         width={210}
         height={118}
-      />
+      /> 
     </Box>
   );
 }

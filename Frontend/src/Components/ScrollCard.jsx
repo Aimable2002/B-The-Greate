@@ -29,7 +29,7 @@ export   const ScrollCard = () => {
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {loading ? null : !loading && movies.length === 0 ? <h1>??</h1> : movies.map((item, index) => (
+      {loading ? null : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> : movies.map((item, index) => (
         <Card   key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -76,7 +76,7 @@ export   const BigScrollCard = () => {
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {loading ? null  : !loading && movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+      {loading ? null  : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> :  movies.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -128,7 +128,7 @@ export   const ndBigScrollCard = () => {
             ) : (
     
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {loading ? null : !loading && movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+      {loading ? null : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> :  movies.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image

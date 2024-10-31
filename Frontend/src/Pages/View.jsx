@@ -5,6 +5,8 @@ import Rating from '@mui/material/Rating';
 import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ndScrollCard';
 import Footer from '../Components/Footer';
 import useGetMovies from '../hook/useGetMovies';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { Alert } from '@mui/material';
 
 const View = () => {
 
@@ -80,8 +82,22 @@ const View = () => {
 
     const videoId = getVideoIdFromUrl(id.Trailor);
 
-    console.log('Trailor :', id.Trailor)
+    // console.log('Trailor :', id.Trailor)
 
+    const movieArray = ['Action', 'Adventure', 'Comedy', 'Drama', 'Thrill', 'Horror']
+    const RandomMovieArray = movieArray.sort(() => Math.random() - 0.5).slice(0, 4);
+
+
+    const handleDownload = () => {
+        if (id.Download) {
+            // Open in new tab
+            window.open(id.Download, '_blank');
+        } else {
+            console.error('Download URL not available');
+            Alert.alert('Download URL not available');
+            // You might want to show a user-friendly error message here
+        }
+    };
 
   return (
     <div className='w-full flex flex-col overflow-auto'>
@@ -110,7 +126,10 @@ const View = () => {
             />
 
                 )}
-            <h1 style={{fontSize: '20px'}} className='py-4'>{id.movieTitle || ''}</h1>
+            <div className='w-full flex flex-row justify-between items-center'>
+                <h1 style={{fontSize: '20px'}} className='py-4'>{id.movieTitle || ''}</h1>
+                <h1 className='py-4 cursor-pointer hover:text-blue-500 flex items-center gap-2' onClick={handleDownload}><ArrowDownwardIcon />  download</h1>
+            </div>
             <div className='w-full flex flex-row gap-4 items-center'>
                 <Rating name="read-only" value={value} readOnly />
                 <i>4.5</i>
@@ -126,10 +145,13 @@ const View = () => {
             </div>
             <div className='w-full flex flex-row gap-4'>
                 <h1 className='text-red-600'>TAGS:  </h1>
-                <h1>Action</h1>
+                {/* <h1>Action</h1>
                 <h1>Assasins</h1>
                 <h1>Thrill</h1>
-                <h1>Advanture</h1>
+                <h1>Advanture</h1> */}
+                {RandomMovieArray.map((movie, index) => (
+                    <h1 key={index}>{movie}</h1>
+                ))}
             </div>
             <p className='py-4'>
                 {id.Description || ''}

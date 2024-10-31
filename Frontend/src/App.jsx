@@ -9,6 +9,7 @@ import SignUpPage from './Pages/signup'
 import Dashboard from './Pages/Dashboard'
 import Signup from './Pages/signup'
 import Login from './Pages/Login'
+import MenuMovie from './Pages/MenuMovie'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/Register' element={<Signup />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/menu' element={<MenuMovie />} />
         </Routes>
       ) : (
         <div className='w-flex items-center text-center justify-center flex-1'>

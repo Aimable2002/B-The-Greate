@@ -39,7 +39,7 @@ export const uploadImage = async (req, res) => {
         }
 
         if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(401).json({ error: 'No files were uploaded.', status:false });
+            return res.status(400).json({ error: 'No files were uploaded.', status:false });
         }
 
         const folderName = 'profile_upload';
@@ -60,7 +60,7 @@ export const uploadImage = async (req, res) => {
         console.log('Upload Results:', results);
 
         if (results.length < 2) {
-            return res.status(403).json({ error: 'Both images must be uploaded.', status: false });
+            return res.status(400).json({ error: 'Both images must be uploaded.', status: false });
         }
 
         // Assign small and large image URLs
@@ -83,7 +83,7 @@ export const uploadImage = async (req, res) => {
                 
             await newMovie.save();
                 
-            return res.status(200).json({
+            return res.status(201).json({
                 message: 'Images uploaded successfully',
                 status: true,
                 movie: newMovie, // Optional: return the newly created movie document
@@ -94,5 +94,6 @@ export const uploadImage = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error', status: false});
     }
 };
+
 
 

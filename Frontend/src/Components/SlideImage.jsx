@@ -4,11 +4,13 @@ import { Button } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import useGetMovies from '../hook/useGetMovies';
 import SkeletonColor from '../Skeleton/CardSkeleton';
+import { useNavigate } from 'react-router-dom';
 
 const SlideImage = () => {
     const [value] = useState(5);
     const { loading, movies } = useGetMovies();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (loading || movies.length === 0) return;
@@ -26,11 +28,22 @@ const SlideImage = () => {
 
     const currentMovie = movies[currentIndex] || {};
 
+    
+  
+  
+ const handleNovigate = (id) => {
+
+   console.log('_id :', id)
+   localStorage.setItem('CM', JSON.stringify(id))
+   navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+
+ }
+
     return (
         <>
         {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-                    <h1 className="text-white">Loading Movies...</h1>
+                    <div className="skeleton h-55 w-full"></div>
                 </div>
             ) : (
             <div className='relative w-full overflow-hidden' style={{ height: `calc(100vh - 150px)`, borderRadius: '10px' }}>
@@ -58,9 +71,12 @@ const SlideImage = () => {
                     <h2 className='text-red-600'>Genre: </h2>
                     <i className='text-white'>Drama</i>
                 </div>
-                <div className='py-4 items-center'>
-                    <Button 
+                <div className='py-4 items-center' style={{zIndex: 3}}>
+                    <Button
                         variant="contained"
+                        onClick={() => handleNovigate(currentMovie)}
+                        // onClick={() => console.log("currentMovie")}
+
                         sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
                     >
                         Stream <PlayArrowIcon />

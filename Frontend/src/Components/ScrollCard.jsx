@@ -28,7 +28,7 @@ export   const ScrollCard = () => {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 -z-10">
+    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
       {loading ? null : !loading && movies.length === 0 ? <h1>??</h1> : movies.map((item, index) => (
         <Card   key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">

@@ -9,6 +9,7 @@ import FinalRate from '../Components/FinalRate'
 import Genre from '../Components/Genre'
 import Footer from '../Components/Footer'
 import useGetMovies from '../hook/useGetMovies'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     const [deviceType, setDeviceType] = useState(''); 
@@ -74,11 +75,11 @@ const Home = () => {
   const {loading, movies} = useGetMovies()
   return (
     <>
-    {loading ? (
+    {/* {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
-            ) : (
+            ) : ( */}
         <div className='w-full flex flex-col overflow-auto'>
         <div className='top-0 left-0 right-0 px-4 py-4 flex justify-between items-center fixed z-10' style={{ backgroundColor: '#0F0F0F' }}>
             <ButtonAppBar />
@@ -102,7 +103,7 @@ const Home = () => {
                 {/* <ScrollCard /> */}
                 <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
                     <h1 style={{fontSize: '30px'}}>Only On Streamit</h1>
-                    <h1 style={{color: 'red', fontSize: '20px'}}>View All</h1>
+                    <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 <ScrollComponent />
                 
@@ -122,7 +123,11 @@ const Home = () => {
                 <SmallCard />
             </div> */}
             <div className='py-4 flex-row justify-evenly'>
-                <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Popular</h1>
+                {/* <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Popular</h1> */}
+                <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
+                    <h1 style={{fontSize: '30px'}}>Popular</h1>
+                    <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
+                </div>
                 {/* <ScrollCard /> */}
                 <ScrollComponent />
             </div>
@@ -137,7 +142,7 @@ const Home = () => {
             <div className='py-4 flex-row justify-evenly'>
                 <div className='w-full flex flex-row items-center text-center justify-between'>
                     <h1 style={{fontSize: '20px'}}>Recommended For You</h1>
-                    <h1 style={{color: 'red', fontSize: '20px'}}>View All</h1>
+                    <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
                 <ScrollComponent />
@@ -155,7 +160,7 @@ const Home = () => {
             <div className='py-4 flex-row justify-evenly'>
                 <div className='w-full flex flex-row items-center justify-between'>
                     <h1 style={{fontSize: '30px'}}>Top Picks For You</h1>
-                    <h1 style={{color: 'red'}}>View All</h1>
+                    <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
                 <ScrollComponent />
@@ -165,7 +170,7 @@ const Home = () => {
             <Footer />
         </div>
     </div>
-    )}
+    {/* )} */}
     </>
   )
 }

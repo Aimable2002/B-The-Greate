@@ -66,8 +66,8 @@ const Upload = () => {
         console.log('FormData 2:', Array.from(formData2.entries()));
 
         try {
-            setUpdateState(null);
-            const response1 = await fetch('https://b-the-greate.onrender.com/api/upload', {
+            setUpdateState('pending');
+            const response = await fetch('https://b-the-greate.onrender.com/api/upload', {
                 method: 'POST',
                 body: formData,
             });
@@ -75,20 +75,44 @@ const Upload = () => {
             //     method: 'POST',
             //     body: formData2,
             // });
+            const data = await response.json();
 
-            console.log('Text Upload successful:', response1);
-            setUpdateState(response1.status)
-            console.log('File Upload successful:', response1.status);
+            if (response.ok) {
+                setUpdateState('success');
+                console.log('Upload successful:', data.message);
+                // Maybe show a success toast with data.message
+            } else {
+                setUpdateState('failed');
+                console.error('Upload failed:', data.message);
+                // Maybe show an error toast with data.message
+            }
+
+            // console.log('Text Upload successful:', response1);
+            // setUpdateState(response1.status)
+            // console.log('File Upload successful:', response1.status);
         } catch (error) {
             console.error('Error uploading:', error);
             // setUpdateState('fail');
         }
     };
-    const statusMessage = updateState === null 
-        ? '' 
-        : updateState === 'true' 
-            ? 'Upload successful' 
-            : 'Upload';
+    // const statusMessage = updateState === null 
+    //     ? '' 
+    //     : updateState === 'true' 
+    //         ? 'Upload successful' 
+    //         : 'Upload';
+
+    const statusMessage = () => {
+        switch(updateState) {
+            case 'pending':
+                return 'Uploading...';
+            case 'success':
+                return 'Completed';
+            case 'failed':
+                return 'Failed';
+            default:
+                return 'Waiting..';
+        }
+    };
 
 
     return (
@@ -175,6 +199,7 @@ const Upload = () => {
                         <option value="Thrill">Thrill</option>
                         <option value="Comedy">Comedy</option>
                         <option value="Adventure">Adventure</option>
+                        <option value="Adventure">Drama</option>
                     </select>
        </div>
 
@@ -200,7 +225,7 @@ const Upload = () => {
                         onChange={(e) => handleUpload(e, 1)}
                     />
                 </div>
-                <Button size='xxlg' onClick={handleSubmit}>Upload : {statusMessage}</Button>
+                <Button size='xxlg' onClick={handleSubmit}>Upload : {statusMessage()}</Button>
             </div>
         </div>
     );

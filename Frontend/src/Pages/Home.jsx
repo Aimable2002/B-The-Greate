@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import ButtonAppBar from '../Components/Header'
 import SlideImage from '../Components/SlideImage'
+import LSlideImage from '../Large/slideImage'
 import Card from '../Components/Card'
 import  { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard, BigScrollCard, ndBigScrollCard } from '../Components/ScrollCard'
 import MiniSlide from '../Components/MiniSlide'
@@ -80,13 +81,13 @@ const Home = () => {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : ( */}
-        <div className='w-full flex flex-col overflow-auto'>
+        <div className='w-full flex flex-col hide-scrollbar overflow-auto'>
         <div className='top-0 left-0 right-0 px-4 py-4 flex justify-between items-center fixed z-10' style={{ backgroundColor: '#0F0F0F' }}>
             <ButtonAppBar />
         </div>
         <div className='px-4 py-4'>
             {/* <SlideImage /> */}
-            { isSmallScreen ? <SlideImage /> : null}
+            { isSmallScreen ? <SlideImage /> : <LSlideImage />}
         </div>
         <div className='px-4 py-4 z-0'>
             <h1 style={{fontSize: '30px'}} className='py-4'>Top 10 Movies To Watch</h1>

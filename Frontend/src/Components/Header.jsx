@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '../Drower/Menu';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../context/authContext';
 
 export default function ButtonAppBar() {
     const [invisible, setInvisible] = React.useState(false);
@@ -19,7 +20,7 @@ export default function ButtonAppBar() {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
+    const { AuthUser } = useAuthContext()
   return (
     <div className='w-full flex flex-row justify-between'>
         <div className=' flex justify-between w-full items-center'>
@@ -39,9 +40,14 @@ export default function ButtonAppBar() {
                 label="Show Badge"
                 /> */}
             </i>
-            <Link to='/dashboard'>
+            {/* <Link to='/dashboard'>
                 <i><PersonIcon /></i>
-            </Link>
+            </Link> */}
+            {AuthUser?.role === 'admin' && (
+                        <Link to='/dashboard'>
+                            <i><PersonIcon /></i>
+                        </Link>
+                    )}
             <i onClick={toggleMenu}><MenuIcon /></i>
         </div>
         </div>

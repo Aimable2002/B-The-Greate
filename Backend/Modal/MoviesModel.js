@@ -46,6 +46,10 @@ const moviesSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    Type: {
+        type: String,
+        require: true
+    },
 },{timestamps: true})
 
 

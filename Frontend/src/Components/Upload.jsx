@@ -17,7 +17,8 @@ const Upload = () => {
         Released_Date: '',
         Trailor: '', 
         Download: '',
-        Category: ''
+        Category: '',
+        Type: ''
     });
 
     const handleFileRef1 = () => {
@@ -71,28 +72,18 @@ const Upload = () => {
                 method: 'POST',
                 body: formData,
             });
-            // const response2 = await fetch('http://localhost:3000/api/upload', {
-            //     method: 'POST',
-            //     body: formData2,
-            // });
             const data = await response.json();
 
             if (response.ok) {
                 setUpdateState('success');
                 console.log('Upload successful:', data.message);
-                // Maybe show a success toast with data.message
             } else {
                 setUpdateState('failed');
                 console.error('Upload failed:', data.message);
-                // Maybe show an error toast with data.message
             }
 
-            // console.log('Text Upload successful:', response1);
-            // setUpdateState(response1.status)
-            // console.log('File Upload successful:', response1.status);
         } catch (error) {
             console.error('Error uploading:', error);
-            // setUpdateState('fail');
         }
     };
     // const statusMessage = updateState === null 
@@ -187,7 +178,7 @@ const Upload = () => {
                </label>
            ))}
 
-<select 
+                <select 
                         name="Category" 
                         className="select select-bordered w-full" 
                         value={input.Category} 
@@ -201,6 +192,18 @@ const Upload = () => {
                         <option value="Adventure">Adventure</option>
                         <option value="Adventure">Drama</option>
                     </select>
+
+                    <select 
+                        name="Type" 
+                        className="select select-bordered w-full" 
+                        value={input.Type} 
+                        onChange={handleChange}
+                    >
+                        <option value="" disabled>Select Type</option>
+                        <option value="Movie">Movie</option>
+                        <option value="Serie">Serie</option>
+                    </select>
+
        </div>
 
             <div className='w-full flex flex-col gap-4 mt-4'>

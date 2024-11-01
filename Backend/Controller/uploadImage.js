@@ -32,9 +32,9 @@ export const uploadImage = async (req, res) => {
         console.log('Received text data:', req.body);
         console.log('Received files:', req.files);
 
-        const {Name, Duration, Studio, Production_Company, Category, Description, Released_Date, Trailor, Download } = req.body
+        const {Name, Duration, Studio, Type, Production_Company, Category, Description, Released_Date, Trailor, Download } = req.body
 
-        if(!Name || !Duration || !Studio || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download ){
+        if(!Name || !Duration || !Studio || !Type || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download ){
             return res.status(400).json({error : 'fill the field', status: false})
         }
 
@@ -77,6 +77,7 @@ export const uploadImage = async (req, res) => {
                 Trailor,
                 Download,
                 Category,
+                Type,
                 SmallImage: smallImageUrl, // Correct assignment
                 LargeImage: largeImageUrl
             });

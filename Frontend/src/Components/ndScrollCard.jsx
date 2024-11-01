@@ -169,8 +169,14 @@ export  const IpadScrollCard = () =>  {
   const navigate = useNavigate()
 
   return (
+    <>
+    {loading ? (
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+          <h1 className="text-white">Loading Movies...</h1>
+      </div>
+  ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {list.map((item, index) => (
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
         <Card  key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -188,6 +194,8 @@ export  const IpadScrollCard = () =>  {
         </Card>
       ))}
     </div>
+  )}
+    </>
   );
 }
 
@@ -199,8 +207,14 @@ export  const PcScrollCard = () => {
   const navigate = useNavigate()
 
   return (
+    <>
+    {loading ? (
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+          <h1 className="text-white">Loading Movies...</h1>
+      </div>
+  ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-6">
-      {list.map((item, index) => (
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
         <Card key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -218,6 +232,8 @@ export  const PcScrollCard = () => {
         </Card>
       ))}
     </div>
+  )}
+    </>
   );
 }
 
@@ -228,8 +244,14 @@ export  const LargeScrollCard = () => {
   const navigate = useNavigate()
 
   return (
+    <>
+    {loading ? (
+      <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+          <h1 className="text-white">Loading Movies...</h1>
+      </div>
+  ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-8">
-      {list.map((item, index) => (
+      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
         <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -247,6 +269,8 @@ export  const LargeScrollCard = () => {
         </Card>
       ))}
     </div>
+  )}
+  </>
   );
 }
 

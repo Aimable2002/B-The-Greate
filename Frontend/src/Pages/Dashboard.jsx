@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import DashComponents from '../Components/DashComponents'
 import ListComponents from '../Components/ListComponents'
 import Upload from '../Components/Upload'
+import SeriesUpload from '../Components/seriesUpload'
 
 const Dashboard = () => {
 
@@ -9,13 +10,14 @@ const Dashboard = () => {
     const [dashboard, setDashboard] = useState(true)
     const [List, setList] = useState(false)
     const [upload, setUpload] = useState(false)
-
+    const [series, setSeries] = useState(false)
     const handleButton = (e) => {
         setIsButton(e)
 
         setDashboard(false)
         setList(false)
         setUpload(false)
+        setSeries(false)
         
         switch (e) {
             case 'dashboard':
@@ -26,6 +28,9 @@ const Dashboard = () => {
                 break;
             case 'Upload':
                 setUpload(true)
+                break
+            case 'Series':
+                setSeries(true)
                 break
             default:
                 break;
@@ -52,27 +57,34 @@ const Dashboard = () => {
 
         <div className='w-full flex py-5 items-center justify-around flex-row'>
             <h1 
-                className={`${isButton === 'dashboard' ? 'text-red-600' : 'text-white'}`}
+                className={`cursor-pointer ${isButton === 'dashboard' ? 'text-red-600' : 'text-white'}`}
                 onClick={(e) => handleButton('dashboard')}
             >
                     Dashboard
             </h1>
             <h1 
-                className={`${isButton === 'List' ? 'text-red-600' : ''}`}
+                className={`cursor-pointer ${isButton === 'List' ? 'text-red-600' : ''}`}
                 onClick={(e) => handleButton('List')}
             >
                 List
             </h1>
             <h1 
-                className={`${isButton === 'Upload' ? 'text-red-600' : ''}`}
+                className={`cursor-pointer ${isButton === 'Upload' ? 'text-red-600' : ''}`}
                 onClick={(e) => handleButton('Upload')}
             >
                 Upload
+            </h1>
+            <h1 
+                className={`cursor-pointer ${isButton === 'Series' ? 'text-red-600' : ''}`}
+                onClick={(e) => handleButton('Series')}
+            >
+                Series
             </h1>
         </div>
         {dashboard && <DashComponents />}
         {List && <ListComponents />}
         { upload && <Upload />}
+        { series && <SeriesUpload />}
     </div>
   )
 }

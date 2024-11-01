@@ -71,6 +71,9 @@ const Login = () => {
       <div className='text-center mt-5'>
           <p>No account yet  <Link to='/Register'><i className='text-green-500'>Signup</i></Link></p>
         </div>
+        <div className='text-center mt-5'>
+          <p>Escape to Login  <Link to='/'><i className='text-green-500'>Move Home</i></Link></p>
+        </div>
     </div>
   );
 };

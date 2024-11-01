@@ -102,6 +102,9 @@ const Signup = () => {
       <div className='text-center mt-5'>
           <p>Have account  <Link to='/login'><i className='text-green-500'>Login</i></Link></p>
         </div>
+        <div className='text-center mt-5'>
+          <p>Escape Login  <Link to='/'><i className='text-green-500'>Move Home</i></Link></p>
+        </div>
     </div>
   );
 };

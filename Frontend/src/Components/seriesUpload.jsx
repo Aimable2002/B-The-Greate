@@ -21,15 +21,14 @@ const seriesUpload = () => {
     const [imagePreviews, setImagePreviews] = useState([null, null]); 
     const [input, setInput] = useState({
         Name: '',
-        Duration: '',
+        Released_Date: '',
         Studio: '',
         Production_Company: '',
         Description: '',
-        Released_Date: '',
         Trailor: '', 
-        Download: '',
         Category: '',
-        Type: '',
+        smallImage: '',  
+        largeImage: '',
         seasons: [{
             seasonNumber: 1,
             episodes: [{
@@ -164,6 +163,9 @@ const seriesUpload = () => {
     // formData.append('seasons', JSON.stringify(seasons));
     // console.log('Adding seasons:', seasons);
 
+    if (files[0]) formData.append('image1', files[0]);
+    if (files[1]) formData.append('image2', files[1]);
+
     Object.keys(input).forEach(key => {
         if (key === 'seasons') {
             formData.append('seasons', JSON.stringify(input.seasons));
@@ -180,7 +182,7 @@ const seriesUpload = () => {
 
         try {
             setUpdateState('pending');
-            const response = await fetch('https://b-the-greate.onrender.com/api/upload/upload', {
+            const response = await fetch('https://b-the-greate.onrender.com/api/upload/series', {
                 method: 'POST',
                 body: formData,
             });
@@ -283,11 +285,11 @@ const seriesUpload = () => {
                         />
                     </label>
                     <label className="input input-bordered flex items-center w-full gap-2">
-                        Duration
+                        Released Date
                         <input 
                             type="text" 
-                            name="Duration"
-                            placeholder="1hr:20mins"
+                            name="Released_Date"
+                            placeholder="10 Oct 2020"
                             className="grow w-full" 
                             onChange={handleChange}
                         />
@@ -296,7 +298,7 @@ const seriesUpload = () => {
             </div>
             
             <div className='w-full flex flex-col gap-4 mt-4'>
-           {['Studio', 'Production Company', 'Description', 'Released Date', 'Trailor', 'Download'].map((label, index) => (
+           {['Studio', 'Production Company', 'Description', 'Trailor'].map((label, index) => (
                <label 
                    key={index}
                    className="input input-bordered flex items-center w-full gap-2"
@@ -309,10 +311,8 @@ const seriesUpload = () => {
                         placeholder={
                             label === 'Studio' ? 'Marvel' : 
                             label === 'Production Company' ? 'Century' : 
-                            label === 'Description' ? '' : 
-                            label === 'Released Date' ? '10 Oct 2020' : 
-                            label === 'Trailor' ? 'https://www.example.com/' : 
-                            label === 'Download' ? 'https://www.example.com/' : ''
+                            label === 'Description' ? '' :  
+                            label === 'Trailor' ? 'https://www.example.com/' : ''
                         } 
                        onChange={handleChange}
                    />
@@ -334,7 +334,7 @@ const seriesUpload = () => {
                         <option value="Adventure">Drama</option>
                     </select>
 
-                    <select 
+                    {/* <select 
                         name="Type" 
                         className="select select-bordered w-full" 
                         value={input.Type} 
@@ -343,7 +343,7 @@ const seriesUpload = () => {
                         <option value="" disabled>Select Type</option>
                         <option value="Movie">Movie</option>
                         <option value="Serie">Serie</option>
-                    </select>
+                    </select> */}
 
        </div>
 

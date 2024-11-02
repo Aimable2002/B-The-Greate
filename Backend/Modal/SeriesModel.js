@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 // Define Episode schema
 const episodeSchema = new mongoose.Schema({
+    episodeNumber: {  // Add this field
+        type: Number,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -12,11 +16,11 @@ const episodeSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     releasedDate: {
         type: String,
-        required: true
+        required: false
     },
     downloadLink: {
         type: String,
@@ -39,17 +43,17 @@ const seriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    duration: {
-        type: String,
-        required: true
-    },
     studio: {
         type: String,
         required: true
     },
+    Category: {
+        type: String,
+        require: true,
+    },
     productionCompany: {
         type: String,
-        required: true
+        required: false
     },
     seasons: [seasonSchema], // Array of seasons
     description: {

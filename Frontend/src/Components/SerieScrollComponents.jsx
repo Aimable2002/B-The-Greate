@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import {useNavigate} from 'react-router-dom'
@@ -10,10 +11,9 @@ const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n-1) + '...' : str;
 }
 
-export   const ScrollCard = () => {
+export   const ScrollCard1 = () => {
 
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+  const {loading, series } = useGetSeries()
 
   const navigate = useNavigate()
   
@@ -26,28 +26,16 @@ export   const ScrollCard = () => {
 
   }
 
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
+  console.log('series :', series)
   return (
     <>
-      {isLoading  ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card   key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -56,7 +44,7 @@ export   const ScrollCard = () => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[200px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col  px-1">
@@ -64,7 +52,7 @@ export   const ScrollCard = () => {
             <p className="text-default-500">{item.Duration}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -77,10 +65,9 @@ export   const ScrollCard = () => {
 }
 
 
-export   const BigScrollCard = () => {
+export   const BigScrollCard1 = () => {
 
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+  const {loading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
@@ -91,30 +78,16 @@ export   const BigScrollCard = () => {
     navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
 
   }
-
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
-
+  console.log('series :', series)
   return (
     <>
-      {isLoading ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      { isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null  : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -123,7 +96,7 @@ export   const BigScrollCard = () => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full  object-contain h-[250px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col  px-1">
@@ -131,7 +104,7 @@ export   const BigScrollCard = () => {
             <p className="text-default-500">{item.Duration}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration }</p>
+          <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -145,11 +118,10 @@ export   const BigScrollCard = () => {
 
 
 
-export   const ndBigScrollCard = () => {
+export   const ndBigScrollCard1 = () => {
 
 
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+  const {loading, series } = useGetSeries()  
 
 
   const navigate = useNavigate()
@@ -161,32 +133,19 @@ export   const ndBigScrollCard = () => {
     navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
 
   }
-
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
+  console.log('series :', series)
 
 //shadow="sm"
   return (
     <>
-      {isLoading ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -195,7 +154,7 @@ export   const ndBigScrollCard = () => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col  px-1">
@@ -203,7 +162,7 @@ export   const ndBigScrollCard = () => {
               <p className="text-default-500">{item.Duration}</p> */}
               <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration }</p>
+          <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -218,10 +177,9 @@ export   const ndBigScrollCard = () => {
 
 
 
-export  const IpadScrollCard = () =>  {
+export  const IpadScrollCard1 = () =>  {
 
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+  const {loading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
@@ -233,29 +191,15 @@ export  const IpadScrollCard = () =>  {
 
   }
 
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
-
   return (
     <>
-      {isLoading ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-4">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card  key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -264,7 +208,7 @@ export  const IpadScrollCard = () =>  {
               alt={item.movieTitle}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small self-start flex flex-col px-6">
@@ -272,7 +216,7 @@ export  const IpadScrollCard = () =>  {
           <p className="text-default-500">{item.Duration}</p> */}
           <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -288,9 +232,8 @@ export  const IpadScrollCard = () =>  {
 
 
 
-export  const PcScrollCard = () => {
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+export  const PcScrollCard1 = () => {
+  const {loading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
@@ -302,29 +245,15 @@ export  const PcScrollCard = () => {
 
   }
 
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
-
   return (
     <>
-      {isLoading ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-6">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -333,7 +262,7 @@ export  const PcScrollCard = () => {
               alt={item.movieTitle}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small self-start flex flex-col px-2">
@@ -341,7 +270,7 @@ export  const PcScrollCard = () => {
           <p className="text-default-500">{item.Duration}</p> */}
           <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -356,9 +285,8 @@ export  const PcScrollCard = () => {
 
 
 
-export  const LargeScrollCard = () => {
-  const { loading: moviesLoading, movies } = useGetMovies()
-  const { loading: seriesLoading, series } = useGetSeries()
+export  const LargeScrollCard1 = () => {
+  const {loading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
@@ -370,29 +298,15 @@ export  const LargeScrollCard = () => {
 
   }
 
-  const allContent = [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
-
-  const isLoading = moviesLoading || seriesLoading
-
-  const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
-  }
-
   return (
     <>
-      {isLoading ? (
+      {loading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-8">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32"></div> :  allContent.map((item, index) => (
+      {loading ? null : !loading && series.length === 0 ? <div className="skeleton h-32 w-32"></div> :  series.series.map((item, index) => (
         <Card shadow="sm" key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -401,13 +315,13 @@ export  const LargeScrollCard = () => {
               alt={item.movieTitle}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
-              src={getImageUrl(item)}
+              src={item.smallImage}
             />
           </CardBody>
           <CardFooter className="text-small self-start flex flex-col px-2">
           <div className="flex flex-row justify-between gap-4">
             <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-            <p className="text-default-500">{item.Duration}</p>
+            <p className="text-default-500">{item.Duration || 'Serie'}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>

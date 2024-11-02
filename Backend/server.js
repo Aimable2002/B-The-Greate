@@ -9,6 +9,7 @@ import UploadRoute from './Router/UploadRoute.js'
 
 import authRouter from './Router/authRauter.js'
 import movieRouter from './Router/moviesRouter.js'
+import seriesRouter from './Router/seriesRouter.js'
 
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(cors())
 app.use('/api/upload', UploadRoute)
 app.use('/api/auth', authRouter)
 app.use('/api/movies', movieRouter)
+app.use('/api/series', seriesRouter)
 
 
 app.use(express.static(path.join(__dirname, "Frontend", "dist")))

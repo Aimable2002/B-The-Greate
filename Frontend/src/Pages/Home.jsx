@@ -11,6 +11,7 @@ import Genre from '../Components/Genre'
 import Footer from '../Components/Footer'
 import useGetMovies from '../hook/useGetMovies'
 import { Link } from 'react-router-dom'
+import { ScrollCard1, BigScrollCard1, ndBigScrollCard1, PcScrollCard1, LargeScrollCard1, IpadScrollCard1 } from '../Components/SerieScrollComponents'
 
 const Home = () => {
     const [deviceType, setDeviceType] = useState(''); 
@@ -42,27 +43,35 @@ const Home = () => {
     }, []);
 
     let ScrollComponent;
+    let SerieScrollComponent;
     switch (deviceType) {
         case 'mobile':
             ScrollComponent = ScrollCard;
+            SerieScrollComponent = ScrollCard1;
             break;
         case 'BigMobile': 
             ScrollComponent = BigScrollCard;
+            SerieScrollComponent = BigScrollCard1;
             break;
         case 'LargePhones':
             ScrollComponent = ndBigScrollCard
+            SerieScrollComponent = ndBigScrollCard1;
             break;
         case 'ipad':
             ScrollComponent = IpadScrollCard;
+            SerieScrollComponent = IpadScrollCard1;
             break;
         case 'pc':
             ScrollComponent = PcScrollCard;
+            SerieScrollComponent = PcScrollCard1;
             break;
         case 'large':
             ScrollComponent = LargeScrollCard;
+            SerieScrollComponent = LargeScrollCard1;
             break;
         default:
             ScrollComponent = ScrollCard; 
+            SerieScrollComponent = ScrollCard1;
     }
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 769);
   useEffect(() => {
@@ -107,7 +116,6 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 <ScrollComponent />
-                
             </div>
 
             <div className='py-4 hide-scrollbar flex-row justify-evenly'>
@@ -130,7 +138,7 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
-                <ScrollComponent />
+                <ScrollComponent /> 
             </div>
             <div className='py-4 flex-row justify-evenly'>
                 {/* <h1>Popular</h1> */}
@@ -164,7 +172,7 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
-                <ScrollComponent />
+                <ScrollComponent /> 
             </div>
         </div>
         <div className='px-4 py-4'>

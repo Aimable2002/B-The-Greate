@@ -1,7 +1,8 @@
-
 import multer from "multer";
+
 import {v2 as cloudinary} from "cloudinary";
 import Movies from "../Modal/MoviesModel.js";
+import Series from "../Modal/SeriesModel.js";
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -33,15 +34,15 @@ export const uploadSerie = async (req, res) => {
         console.log('Received text data:', req.body);
         console.log('Received files:', req.files);
 
-        // const {Name, Duration, Studio, Type, Production_Company, Category, Description, Released_Date, Trailor, Download } = req.body
+        const { Name, Studio, Production_Company, Category, Description, Released_Date, Trailor, seasons } = req.body
 
-        // if(!Name || !Duration || !Studio || !Type || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download ){
-        //     return res.status(400).json({error : 'fill the field', status: false})
-        // }
+        if(!Name || !Studio || !Production_Company || !Description || !Released_Date || !Category || !Trailor){
+            return res.status(450).json({error : 'fill the field', status: false})
+        }
 
-        // if (!req.files || Object.keys(req.files).length === 0) {
-        //     return res.status(400).json({ error: 'No files were uploaded.', status:false });
-        // }
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(490).json({ error: 'No files were uploaded.', status:false });
+        }
 
         const folderName = 'profile_upload';
         const uploadPromises = [];
@@ -61,34 +62,41 @@ export const uploadSerie = async (req, res) => {
         console.log('Upload Results:', results);
 
         if (results.length < 2) {
-            return res.status(400).json({ error: 'Both images must be uploaded.', status: false });
+            return res.status(410).json({ error: 'Both images must be uploaded.', status: false });
         }
 
-        // Assign small and large image URLs
-        const smallImageUrl = results[0].secure_url; // Assuming first image is small
+        const smallImageUrl = results[0].secure_url; 
         const largeImageUrl = results[1].secure_url;
 
-            // const newMovie = new Movies({
-            //     movieTitle: Name,
-            //     Duration,
-            //     Studio,
-            //     ProductionCompany: Production_Company,
-            //     Description,
-            //     Released_date: Released_Date,
-            //     Trailor,
-            //     Download,
-            //     Category,
-            //     Type,
-            //     SmallImage: smallImageUrl, // Correct assignment
-            //     LargeImage: largeImageUrl
-            // });
+        let parsedSeasons;
+        try {
+            parsedSeasons = JSON.parse(seasons);
+        } catch (error) {
+            return res.status(409).json({ 
+                error: 'Invalid seasons data format', 
+                status: false 
+            });
+        }
+
+        const newSeries = new Series({
+            movieTitle: Name,
+            studio: Studio,
+            productionCompany: Production_Company,
+            description: Description,
+            releasedDate: Released_Date,
+            trailer: Trailor,
+            Category: Category,
+            seasons: parsedSeasons,
+            smallImage: smallImageUrl,
+            largeImage: largeImageUrl
+        });
                 
-            // await newMovie.save();
+            await newSeries.save();
                 
             return res.status(201).json({
                 message: 'Images uploaded successfully',
                 status: true,
-                movie: newMovie, // Optional: return the newly created movie document
+                movie: newSeries, // Optional: return the newly created movie document
             });
 
     } catch (error) {
@@ -97,5 +105,78 @@ export const uploadSerie = async (req, res) => {
     }
 };
 
+export const editChanges = async (req, res) => {
+    try {
+        // console.log('Received text data:', req.body);
+        // console.log('Received files:', req.files);
+
+        const { movieId, movieTitle, trailor, download } = req.body;
 
 
+        return !movieId || !movieTitle || !trailor || !download
+            ? res.status(400).json({ error: 'MovieId and title are required', status: false })
+            : await handleImageUpload(req, res, movieId);
+
+    } catch (error) {
+        console.log('Internal server error:', error);
+        return res.status(500).json({ error: 'Internal server error', status: false });
+    }
+};
+
+// Helper function to handle the image upload logic
+const handleImageUpload = async (req, res, movieId) => {
+    const checkMovie = await Movies.findById(movieId);
+    
+    return !checkMovie 
+        ? res.status(404).json({ error: 'Movie not found', status: false })
+        : await processUpdate(req, res, movieId);
+};
+
+// Helper function to process the update
+const processUpdate = async (req, res, movieId) => {
+    const { movieTitle, trailor, download } = req.body;
+    const updateData = { movieTitle, trailor, download };
+
+    // Process images if they exist
+    if (req.files && Object.keys(req.files).length > 0) {
+        for (const [fieldName, files] of Object.entries(req.files)) {
+            if (files[0]?.buffer) {
+                const result = await uploadToCloudinary(files[0].buffer, 'profile_upload');
+                
+                fieldName === 'image1' && (updateData.SmallImage = result.secure_url);
+                fieldName === 'image2' && (updateData.LargeImage = result.secure_url);
+            }
+        }
+    }
+
+    const updatedMovie = await Movies.findByIdAndUpdate(
+        movieId,
+        { $set: updateData },
+        { new: true }
+    );
+
+    return res.status(200).json({
+        message: 'Movie updated successfully',
+        status: true,
+        movie: updatedMovie,
+    });
+};
+
+
+
+
+
+
+export const deleteMovie = async (req, res) => {
+    const { movieId } = req.body;
+    await Movies.findByIdAndDelete(movieId);
+    return res.status(200).json({ message: 'Movie deleted successfully', status: true });
+};
+
+
+
+
+export const getSeries = async (req, res) => {
+    const series = await Series.find();
+    return res.status(200).json({ series });
+};

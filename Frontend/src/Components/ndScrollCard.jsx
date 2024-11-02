@@ -5,7 +5,9 @@ import useGetMovies from "../hook/useGetMovies";
 import SkeletonColor from "../Skeleton/CardSkeleton";
 // import { SkeletonColor } from '../Skeleton/CardSkeleton'
 
-
+const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n-1) + '...' : str;
+}
 
 export   const ScrollCard = ({ movies, onImageClick }) => {
 
@@ -37,16 +39,21 @@ const NewonImageClick = (id) => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[200px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
               onPress={() => NewonImageClick(item)}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col justify-around px-1">
+            {/* <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))} 
@@ -89,15 +96,20 @@ const NewonImageClick = (id) => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full  object-contain h-[250px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col justify-around px-1">
+            {/* <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -143,15 +155,20 @@ export   const ndBigScrollCard = ({ movies, onImageClick }) => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-arround px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col justify-arround px-1">
+            {/* <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -182,14 +199,19 @@ export  const IpadScrollCard = () =>  {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.title}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[200px]"
-              src={item.img}
+              src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.title}</b>
-            <p className="text-default-500">{item.price}</p>
+          <CardFooter className="text-small flex flex-col justify-around px-1">
+            {/* <b>{item.title}</b>
+            <p className="text-default-500">{item.price}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -220,14 +242,19 @@ export  const PcScrollCard = () => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.title}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[300px]"
-              src={item.img}
+              src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between px-2">
-            <b>{item.title}</b>
-            <p className="text-default-500">{item.price}</p>
+          <CardFooter className="text-small justify-between px-1">
+            {/* <b>{item.title}</b>
+            <p className="text-default-500">{item.price}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -257,14 +284,19 @@ export  const LargeScrollCard = () => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.title}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[350px]"
-              src={item.img}
+              src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between px-2">
-            <b>{item.title}</b>
-            <p className="text-default-500">{item.price}</p>
+          <CardFooter className="text-small justify-between px-1">
+            {/* <b>{item.title}</b>
+            <p className="text-default-500">{item.price}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}

@@ -38,7 +38,7 @@ function App() {
           <Route path='/dashboard' element={ AuthUser ? <Dashboard /> : <Navigate to='/login' /> } />
           <Route path='/Register' element={<Signup />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/menu' element={ AuthUser ? <MenuMovie /> : <Navigate to='/login' /> } />
+          <Route path='/menu' element={<MenuMovie />} />
         </Routes>
       {/* ) : ( */}
         {/* <div className='w-flex items-center text-center justify-center flex-1'>

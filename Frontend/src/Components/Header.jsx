@@ -21,6 +21,7 @@ export default function ButtonAppBar() {
         setMenuOpen(!menuOpen);
     };
     const { AuthUser } = useAuthContext()
+    // console.log(AuthUser.userName)
   return (
     <div className='w-full flex flex-row justify-between'>
         <div className=' flex justify-between w-full items-center'>
@@ -43,7 +44,7 @@ export default function ButtonAppBar() {
             {/* <Link to='/dashboard'>
                 <i><PersonIcon /></i>
             </Link> */}
-            {AuthUser?.role === 'admin' && (
+            {AuthUser?.userName === 'Admin' && (
                         <Link to='/dashboard'>
                             <i><PersonIcon /></i>
                         </Link>

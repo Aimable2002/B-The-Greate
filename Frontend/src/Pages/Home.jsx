@@ -89,7 +89,7 @@ const Home = () => {
             {/* <SlideImage /> */}
             { isSmallScreen ? <SlideImage /> : <LSlideImage />}
         </div>
-        <div className='px-4 py-4 z-0'>
+        <div className='px-4 hide-scrollbar py-4 z-0'>
             <h1 style={{fontSize: '30px'}} className='py-4'>Top 10 Movies To Watch</h1>
             <div className='py-4 flex-row justify-evenly'>
                 {/* <Card /> */}
@@ -100,7 +100,7 @@ const Home = () => {
                 
             </div>
 
-            <div className='py-4 flex-row justify-evenly'>
+            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 {/* <ScrollCard /> */}
                 <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
                     <h1 style={{fontSize: '30px'}}>Only On Streamit</h1>
@@ -110,7 +110,7 @@ const Home = () => {
                 
             </div>
 
-            <div className='py-4 flex-row justify-evenly'>
+            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 {/* <ScrollCard /> */}
                 <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Upcoming Movies</h1>
                 <ScrollComponent />
@@ -123,7 +123,7 @@ const Home = () => {
                 <h1>Your Favorite Personality</h1>
                 <SmallCard />
             </div> */}
-            <div className='py-4 flex-row justify-evenly'>
+            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 {/* <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Popular</h1> */}
                 <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
                     <h1 style={{fontSize: '30px'}}>Popular</h1>
@@ -140,7 +140,7 @@ const Home = () => {
                 <h1>Movie Genre</h1>
                 <Genre />
             </div> */}
-            <div className='py-4 flex-row justify-evenly'>
+            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 <div className='w-full flex flex-row items-center text-center justify-between'>
                     <h1 style={{fontSize: '20px'}}>Recommended For You</h1>
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
@@ -158,7 +158,7 @@ const Home = () => {
                 <ScrollComponent />
             </div> */}
 
-            <div className='py-4 flex-row justify-evenly'>
+            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 <div className='w-full flex flex-row items-center justify-between'>
                     <h1 style={{fontSize: '30px'}}>Top Picks For You</h1>
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>

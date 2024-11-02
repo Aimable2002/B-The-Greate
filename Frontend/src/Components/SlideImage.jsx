@@ -6,6 +6,10 @@ import useGetMovies from '../hook/useGetMovies';
 import SkeletonColor from '../Skeleton/CardSkeleton';
 import { useNavigate } from 'react-router-dom';
 
+const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n-1) + '...' : str;
+}
+
 const SlideImage = () => {
     const [value] = useState(5);
     const { loading, movies } = useGetMovies();
@@ -60,7 +64,7 @@ const SlideImage = () => {
                     <h1 className='text-white'>Thrill</h1>
                 </div>
                 <h1 className='py-4 text-white'>{currentMovie.movieTitle || ''}</h1>
-                <p className='text-white'>{currentMovie.Description}</p>
+                <p className='text-white'>{truncate(currentMovie.Description, 100)}</p>
                 <div className='w-full flex flex-row py-4 gap-4 items-center'>
                     <Rating name="read-only" value={value} readOnly />
                     <i className='text-white'>4.5</i>

@@ -5,7 +5,9 @@ import useGetMovies from "../hook/useGetMovies";
 import SkeletonColor from "../Skeleton/CardSkeleton";
 // import { SkeletonColor } from '../Skeleton/CardSkeleton'
 
-
+const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n-1) + '...' : str;
+}
 
 export   const ScrollCard = () => {
 
@@ -35,15 +37,20 @@ export   const ScrollCard = () => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[200px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col  px-1">
+            {/* <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -82,15 +89,20 @@ export   const BigScrollCard = () => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full  object-contain h-[250px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col  px-1">
+            {/* <b>{item.movieTitle}</b>
+            <p className="text-default-500">{item.Duration}</p> */}
+            <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -134,15 +146,20 @@ export   const ndBigScrollCard = () => {
             <Image
               // radius="lg"
               width="100%"
-              alt={item.movieTitle}
+              alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-arround px-6">
-            <b>{item.movieTitle}</b>
-            <p className="text-default-500">{item.Duration}</p>
+          <CardFooter className="text-small flex flex-col  px-1">
+              {/* <b>{item.movieTitle}</b>
+              <p className="text-default-500">{item.Duration}</p> */}
+              <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+          <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -176,7 +193,7 @@ export  const IpadScrollCard = () =>  {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+    <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-4">
       {loading ? null : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> :  movies.map((item, index) => (
         <Card  key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
@@ -189,9 +206,14 @@ export  const IpadScrollCard = () =>  {
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small flex flex-col justify-around px-6">
-          <b>{item.movieTitle}</b>
+          <CardFooter className="text-small self-start flex flex-col px-6">
+          {/* <b>{item.movieTitle}</b>
+          <p className="text-default-500">{item.Duration}</p> */}
+          <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
           <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -225,7 +247,7 @@ export  const PcScrollCard = () => {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-6">
+    <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-6">
       {loading ? null : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> :  movies.map((item, index) => (
         <Card key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
@@ -238,9 +260,14 @@ export  const PcScrollCard = () => {
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between px-2">
-          <b>{item.movieTitle}</b>
+          <CardFooter className="text-small self-start flex flex-col px-2">
+          {/* <b>{item.movieTitle}</b>
+          <p className="text-default-500">{item.Duration}</p> */}
+          <div className="flex flex-row justify-between gap-4">
+          <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
           <p className="text-default-500">{item.Duration}</p>
+          </div>
+          <b>{item.movieTitle}</b>
           </CardFooter>
         </Card>
       ))}
@@ -273,7 +300,7 @@ export  const LargeScrollCard = () => {
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-8">
+    <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-8">
       {loading ? null : !loading && movies.length === 0 ? <div className="skeleton h-32 w-32"></div> :  movies.map((item, index) => (
         <Card shadow="sm" key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
@@ -286,9 +313,12 @@ export  const LargeScrollCard = () => {
               src={item.SmallImage}
             />
           </CardBody>
-          <CardFooter className="text-small justify-between px-2">
+          <CardFooter className="text-small self-start flex flex-col px-2">
+          <div className="flex flex-row justify-between gap-4">
+            <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
+            <p className="text-default-500">{item.Duration}</p>
+          </div>
           <b>{item.movieTitle}</b>
-          <p className="text-default-500">{item.Duration}</p>
           </CardFooter>
         </Card>
       ))}

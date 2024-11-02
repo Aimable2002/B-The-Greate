@@ -96,7 +96,7 @@ const LSlideImage = () => {
             {/* Right side image */}
             <div className='w-1/2 h-full relative'>
                 <img
-                    src={currentMovie.SmallImage} 
+                    src={currentMovie.LargeImage} 
                     alt={currentMovie.movieTitle || ''}
                     className='w-full h-full object-contain'
                 />

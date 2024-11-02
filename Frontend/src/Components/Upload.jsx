@@ -68,7 +68,7 @@ const Upload = () => {
 
         try {
             setUpdateState('pending');
-            const response = await fetch('https://agasobanuye.netlify.app/api/upload', {
+            const response = await fetch('https://b-the-greate.onrender.com/api/upload', {
                 method: 'POST',
                 body: formData,
             });

@@ -180,7 +180,7 @@ const seriesUpload = () => {
 
         try {
             setUpdateState('pending');
-            const response = await fetch('https://agasobanuye.netlify.app/api/upload/upload', {
+            const response = await fetch('https://b-the-greate.onrender.com/api/upload/upload', {
                 method: 'POST',
                 body: formData,
             });

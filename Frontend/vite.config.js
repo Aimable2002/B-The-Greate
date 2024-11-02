@@ -8,7 +8,7 @@ export default defineConfig({
     port: 4000,
     proxy: {
       '/api': {
-        target: 'https://agasobanuye.netlify.app',
+        target: 'https://b-the-greate.onrender.com',
         changeOrigin: true
       }
     }

@@ -48,7 +48,7 @@ const FinalRate = () => {
                     <h1 className='text-white'>Thrill</h1>
                 </div>
                 <h1 className='py-4 text-white'>{currentMovie.movieTitle || ''}</h1>
-                <p className='text-white'>{currentMovie.Description}</p>
+                {/* <p className='text-white'>{currentMovie.Description}</p> */}
                 <div className='w-full flex flex-row py-4 gap-4 items-center'>
                     <Rating name="read-only" value={value} readOnly />
                     <i className='text-white'>4.5</i>

@@ -32,9 +32,24 @@ export const uploadImage = async (req, res) => {
         console.log('Received text data:', req.body);
         console.log('Received files:', req.files);
 
-        const {Name, Duration, Studio, Type, Production_Company, Category, Description, Released_Date, Trailor, Download } = req.body
+        const {
+            Name, 
+            Duration, 
+            Studio, 
+            Type, 
+            Production_Company, 
+            Category, 
+            Description, 
+            Released_Date, 
+            Trailor, 
+            Download, 
+            Genre,
+            Translator,
+            Director,
+            Tags,
+        } = req.body
 
-        if(!Name || !Duration || !Studio || !Type || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download ){
+        if(!Name || !Translator || !Director || !Tags || !Duration || !Studio || !Type || !Production_Company || !Description || !Released_Date || !Category || !Trailor || !Download || !Genre){
             return res.status(400).json({error : 'fill the field', status: false})
         }
 
@@ -63,8 +78,7 @@ export const uploadImage = async (req, res) => {
             return res.status(400).json({ error: 'Both images must be uploaded.', status: false });
         }
 
-        // Assign small and large image URLs
-        const smallImageUrl = results[0].secure_url; // Assuming first image is small
+        const smallImageUrl = results[0].secure_url; 
         const largeImageUrl = results[1].secure_url;
 
             const newMovie = new Movies({
@@ -78,7 +92,11 @@ export const uploadImage = async (req, res) => {
                 Download,
                 Category,
                 Type,
-                SmallImage: smallImageUrl, // Correct assignment
+                Genre,
+                Translator,
+                Director,
+                Tags,
+                SmallImage: smallImageUrl, 
                 LargeImage: largeImageUrl
             });
                 
@@ -87,7 +105,7 @@ export const uploadImage = async (req, res) => {
             return res.status(201).json({
                 message: 'Images uploaded successfully',
                 status: true,
-                movie: newMovie, // Optional: return the newly created movie document
+                movie: newMovie, 
             });
 
     } catch (error) {

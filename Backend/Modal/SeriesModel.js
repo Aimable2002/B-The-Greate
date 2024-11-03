@@ -47,6 +47,26 @@ const seriesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    Genre: {
+        type: String,
+        required: false
+    },
+    Directors: {
+        type: String,
+        required: false
+    },
+    Translator: {
+        type: String,
+        required: false
+    },
+    Tags: {
+        type: String,
+        required: false
+    },
+    Type: {
+        type: String,
+        required: false
+    },
     Category: {
         type: String,
         require: true,

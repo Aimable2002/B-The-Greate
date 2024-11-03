@@ -38,6 +38,22 @@ const moviesSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    Genre: {
+        type: String,
+        required: false
+    },
+    Director: {
+        type: String,
+        required: false
+    },
+    Translator: {
+        type: String,
+        required: false
+    },
+    Tags: {
+        type: String,
+        required: false
+    },
     SmallImage: {
         type: String,
         require: true

@@ -3,10 +3,20 @@ import useGetMovies from '../hook/useGetMovies'
 import SkeletonColor from '../Skeleton/CardSkeleton'
 import { Button } from '@nextui-org/react';
 import SerieComponents from './SerieComponents'
+import useGetSeries from '../hook/useGetSeries';
+import AddSeries from './AddSeries';
 
 const ListComponents = () => {
 
-  const { loading, movies } = useGetMovies()
+  const { loading: moviesLoading, movies } = useGetMovies()
+  const { loading: seriesLoading, series } = useGetSeries()
+
+  const allContent = [
+    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+  ]
+
+  const isLoading = moviesLoading || seriesLoading
   
   const [editTitle, setEditTitle] = useState('');
   const [smallImage, setSmallImage] = useState('');
@@ -133,17 +143,17 @@ const statusMessage = () => {
     <>
         <div className='w-full flex px-4 py-4 flex-1'>
       <div className='w-full flex flex-col gap-4 items-center text-center'>
-        {loading ? (
+        {isLoading ? (
           <SkeletonColor />
-        ) : movies.length === 0 ? (
+        ) : !isLoading && allContent.length === 0 ? (
           'No movie'
         ) : (
-          movies.map((mov) => (
+          allContent.map((mov) => (
             <div className='w-full flex flex-row  items-center' key={mov._id}>
               <div className="avatar placeholder w-[30%]">
                 <div className="bg-neutral text-neutral-content w-14">
                   <img 
-                    src={mov.SmallImage} 
+                    src={mov.SmallImage || mov.smallImage} 
                     alt="Image Preview" 
                     className="w-24 h-24 object-contain"
                   />
@@ -151,111 +161,131 @@ const statusMessage = () => {
               </div>
               <div className='flex flex-col gap-2 items-start w-[55%]'>
                 <h1>{mov.movieTitle}</h1>
-                <i>{mov.Duration}</i>
+                <i>{mov.Duration || ''}</i>
               </div>
-              <div className='w-[15%]'>
-                {/* <i onClick={()=>document.getElementById(mov._id).showModal()}>Edit</i> */}
-                <i onClick={() => {
-  setEditingMovieId(mov._id);  // Store the movie ID being edited
-  handleEdit(mov);  // Set other edit values
-  document.getElementById(mov._id).showModal();
-}}>Edit</i>
+              <div className='w-[15%] '>
+                <div className='flex flex-row gap-4'>
+                {mov.type === 'series' && (
+                  <i onClick={() => {
+                    setEditingMovieId(mov._id); 
+                    handleEdit(mov); 
+                    document.getElementById(`series-${mov._id}`).showModal();
+                  }}>Add</i>
+                )}
+                                  <i onClick={() => {
+                    setEditingMovieId(mov._id);  // Store the movie ID being edited
+                    handleEdit(mov);  // Set other edit values
+                    document.getElementById(mov._id).showModal();
+                  }}>Edit</i>
+                </div>
+
                 <dialog id={mov._id} className="modal">
-    <div className="modal-box">
-      <form method="dialog">
-        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-      </form>
-      <h3 className="font-bold text-lg mb-4">Edit Movie : {mov.movieTitle}</h3>
-      
-      <div className="flex flex-col gap-4">
-        <div>
-          <label className="label">Movie Title</label>
-          <input 
-            type="text" 
-            value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label className="label">Movie Trailor</label>
-          <input 
-            type="text" 
-            value={trailor}
-            onChange={(e) => setTrailor(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label className="label">Movie Download URL</label>
-          <input 
-            type="text" 
-            value={download}
-            onChange={(e) => setDownload(e.target.value)}
-            className="input input-bordered w-full"
-          />
-        </div>
+                  <div className="modal-box">
+                    <form method="dialog">
+                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 className="font-bold text-lg mb-4">Edit Movie : {mov.movieTitle}</h3>
+                    
+                    <div className="flex flex-col gap-4">
+                      <div>
+                        <label className="label">Movie Title</label>
+                        <input 
+                          type="text" 
+                          value={editTitle}
+                          onChange={(e) => setEditTitle(e.target.value)}
+                          className="input input-bordered w-full"
+                        />
+                      </div>
+                      <div>
+                        <label className="label">Movie Trailor</label>
+                        <input 
+                          type="text" 
+                          value={trailor}
+                          onChange={(e) => setTrailor(e.target.value)}
+                          className="input input-bordered w-full"
+                        />
+                      </div>
+                      <div>
+                        <label className="label">Movie Download URL</label>
+                        <input 
+                          type="text" 
+                          value={download}
+                          onChange={(e) => setDownload(e.target.value)}
+                          className="input input-bordered w-full"
+                        />
+                      </div>
 
-        <div className="flex gap-4">
-          <div>
-            <label className="label">Small Image</label>
-            <div className="avatar placeholder cursor-pointer" onClick={() => smallImageRef.current.click()}>
-              <div className="bg-neutral text-neutral-content w-24 h-24">
-                {smallImage ? (
-                  <img src={smallImage} alt="Small Preview" className="w-full h-full object-contain"/>
-                ) : (
-                  <span>Small</span>
-                )}
-              </div>
-            </div>
-            <input
-              ref={smallImageRef}
-              type="file"
-              className="hidden"
-              onChange={(e) => handleImageUpload(e, 'small')}
-              accept="image/*"
-            />
-          </div>
+                      <div className="flex gap-4">
+                        <div>
+                          <label className="label">Small Image</label>
+                          <div className="avatar placeholder cursor-pointer" onClick={() => smallImageRef.current.click()}>
+                            <div className="bg-neutral text-neutral-content w-24 h-24">
+                              {smallImage ? (
+                                <img src={smallImage} alt="Small Preview" className="w-full h-full object-contain"/>
+                              ) : (
+                                <span>Small</span>
+                              )}
+                            </div>
+                          </div>
+                          <input
+                            ref={smallImageRef}
+                            type="file"
+                            className="hidden"
+                            onChange={(e) => handleImageUpload(e, 'small')}
+                            accept="image/*"
+                          />
+                        </div>
 
-          <div>
-            <label className="label">Large Image</label>
-            <div className="avatar placeholder cursor-pointer" onClick={() => largeImageRef.current.click()}>
-              <div className="bg-neutral text-neutral-content w-24 h-24">
-                {largeImage ? (
-                  <img src={largeImage} alt="Large Preview" className="w-full h-full object-contain"/>
-                ) : (
-                  <span>Large</span>
-                )}
-              </div>
-            </div>
-            <input
-              ref={largeImageRef}
-              type="file"
-              className="hidden"
-              onChange={(e) => handleImageUpload(e, 'large')}
-              accept="image/*"
-            />
-          </div>
-        </div>
+                        <div>
+                          <label className="label">Large Image</label>
+                          <div className="avatar placeholder cursor-pointer" onClick={() => largeImageRef.current.click()}>
+                            <div className="bg-neutral text-neutral-content w-24 h-24">
+                              {largeImage ? (
+                                <img src={largeImage} alt="Large Preview" className="w-full h-full object-contain"/>
+                              ) : (
+                                <span>Large</span>
+                              )}
+                            </div>
+                          </div>
+                          <input
+                            ref={largeImageRef}
+                            type="file"
+                            className="hidden"
+                            onChange={(e) => handleImageUpload(e, 'large')}
+                            accept="image/*"
+                          />
+                        </div>
+                      </div>
 
-        <div className="flex gap-4 justify-end mt-4">
-          <Button 
-            color="danger" 
-            onClick={() => handleDelete(mov._id)}
-          >
-            Delete Movie
-          </Button>
-          <Button 
-            color="primary"
-            // onPress={handleSaveChanges}
-            onClick={handleSaveChanges}
-          >
-            {statusMessage()}
-          </Button>
-        </div>
+                      <div className="flex gap-4 justify-end mt-4">
+                        <Button 
+                          color="danger" 
+                          onClick={() => handleDelete(mov._id)}
+                        >
+                          Delete Movie
+                        </Button>
+                        <Button 
+                          color="primary"
+                          // onPress={handleSaveChanges}
+                          onClick={handleSaveChanges}
+                        >
+                          {statusMessage()}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </dialog>
+
+                {mov.type === 'series' && (
+    <dialog id={`series-${mov._id}`} className="modal">
+      <div className="modal-box">
+        <form method="dialog">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <AddSeries seriesId={mov._id} seriesName={mov.movieTitle} seriesData={mov} />
       </div>
-    </div>
-  </dialog>
+    </dialog>
+  )}
 
               </div>
             </div>
@@ -263,7 +293,7 @@ const statusMessage = () => {
         )}
       </div>
     </div>
-    <SerieComponents />
+    {/* <SerieComponents /> */}
     </>
   );
   

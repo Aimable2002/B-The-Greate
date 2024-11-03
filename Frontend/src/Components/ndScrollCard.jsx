@@ -9,31 +9,51 @@ const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n-1) + '...' : str;
 }
 
-export   const ScrollCard = ({ movies, onImageClick }) => {
+export   const ScrollCard = ({ movies, moviesLoading, series, seriesLoading, onImageClick,  currentEpisode, currentSeason }) => {
 
-const {loading } = useGetMovies() 
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
 
 const navigate = useNavigate()
 
 const NewonImageClick = (id) => {
     console.log('clicked')
-    localStorage.setItem('CM', JSON.stringify(id))
-    onImageClick(id);
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
 }
 
+const allContent = [
+  ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+  ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+]
+
+const isLoading = moviesLoading || seriesLoading
+
+const getImageUrl = (item) => {
+  if (item.type === 'series') {
+    return item.smallImage || item.SmallImage // handle both cases
+  }
+  return item.SmallImage
+}
+
   return (
     <>
-      {loading ? (
+      {isLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
 
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> : movies.map((item, index) => (
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> : allContent.map((item, index) => (
         <Card   key={item._id} isPressable onPress={() => NewonImageClick(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -42,7 +62,7 @@ const NewonImageClick = (id) => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[200px]"
               style={{resizeMode: 'contain'}}
-              src={item.SmallImage}
+              src={getImageUrl(item)}
               onPress={() => NewonImageClick(item)}
             />
           </CardBody>
@@ -51,7 +71,7 @@ const NewonImageClick = (id) => {
             <p className="text-default-500">{item.Duration}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -64,33 +84,52 @@ const NewonImageClick = (id) => {
 }
 
 
-export   const BigScrollCard = ({ movies, onImageClick }) => {
+export   const BigScrollCard = ({ currentSeason, movies, moviesLoading, series, seriesLoading, onImageClick, currentEpisode }) => {
 
-//   const {loading, movies } = useGetMovies()
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
 
 const navigate = useNavigate()
 
-const {loading} = useGetMovies()
 
 const NewonImageClick = (id) => {
     console.log('clicked')
-    localStorage.setItem('CM', JSON.stringify(id))
-    onImageClick(id);
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
 }
 
+const allContent = [
+  ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+  ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+]
+
+const isLoading = moviesLoading || seriesLoading
+
+const getImageUrl = (item) => {
+  if (item.type === 'series') {
+    return item.smallImage || item.SmallImage // handle both cases
+  }
+  return item.SmallImage
+}
+
   return (
     <>
-      {loading ? (
+      {isLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
 
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> :  allContent.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => NewonImageClick (item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -99,7 +138,7 @@ const NewonImageClick = (id) => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full  object-contain h-[250px]"
               style={{resizeMode: 'contain'}}
-              src={item.SmallImage}
+              src={getImageUrl(item)}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col justify-around px-1">
@@ -107,7 +146,7 @@ const NewonImageClick = (id) => {
             <p className="text-default-500">{item.Duration}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -121,35 +160,54 @@ const NewonImageClick = (id) => {
 
 
 
-export   const ndBigScrollCard = ({ movies, onImageClick }) => {
+export   const ndBigScrollCard = ({ currentSeason, movies, moviesLoading, currentEpisode, series, seriesLoading, onImageClick }) => {
 
 
-//   const {loading, movies } = useGetMovies()
-  const {loading} = useGetMovies()
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
   const NewonImageClick = (id) => {
     console.log('clicked')
-    localStorage.setItem('CM', JSON.stringify(id))
-    onImageClick(id);
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
+
+const allContent = [
+  ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+  ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+]
+
+const isLoading = moviesLoading || seriesLoading
+
+const getImageUrl = (item) => {
+  if (item.type === 'series') {
+    return item.smallImage || item.SmallImage // handle both cases
+  }
+  return item.SmallImage
 }
 
 
   
   return (
     <>
-      {loading ? (
+      {isLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
 
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> :  allContent.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => NewonImageClick(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -158,7 +216,7 @@ export   const ndBigScrollCard = ({ movies, onImageClick }) => {
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain  h-[350px]"
               style={{resizeMode: 'contain'}}
-              src={item.SmallImage}
+              src={getImageUrl(item)}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col justify-arround px-1">
@@ -166,7 +224,7 @@ export   const ndBigScrollCard = ({ movies, onImageClick }) => {
             <p className="text-default-500">{item.Duration}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -181,27 +239,59 @@ export   const ndBigScrollCard = ({ movies, onImageClick }) => {
 
 
 
-export  const IpadScrollCard = () =>  {
+export  const IpadScrollCard = ({ currentSeason, movies, currentEpisode, moviesLoading, series, seriesLoading, onImageClick }) =>  {
+
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
 
   const navigate = useNavigate()
 
+  const NewonImageClick = (id) => {
+    console.log('clicked')
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
+
+
+  const allContent = [
+    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+  ]
+  
+  const isLoading = moviesLoading || seriesLoading
+  
+  const getImageUrl = (item) => {
+    if (item.type === 'series') {
+      return item.smallImage || item.SmallImage // handle both cases
+    }
+    return item.SmallImage
+  }
+
   return (
     <>
-    {loading ? (
+    {isLoading ? (
       <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
           <h1 className="text-white">Loading Movies...</h1>
       </div>
   ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
-        <Card  key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> :  allContent.map((item, index) => (
+        <Card  key={index} isPressable onPress={() => NewonImageClick(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
               // radius="lg"
               width="100%"
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[200px]"
-              src={item.SmallImage}
+              src={getImageUrl(item)}
             />
           </CardBody>
           <CardFooter className="text-small flex flex-col justify-around px-1">
@@ -209,7 +299,7 @@ export  const IpadScrollCard = () =>  {
             <p className="text-default-500">{item.price}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -225,26 +315,58 @@ export  const IpadScrollCard = () =>  {
 
 
 
-export  const PcScrollCard = () => {
+export  const PcScrollCard = ({ currentSeason, movies, currentEpisode, moviesLoading, series, seriesLoading, onImageClick }) => {
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
+
   const navigate = useNavigate()
+
+  const NewonImageClick = (id) => {
+    console.log('clicked')
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
+
+
+  const allContent = [
+    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+  ]
+  
+  const isLoading = moviesLoading || seriesLoading
+  
+  const getImageUrl = (item) => {
+    if (item.type === 'series') {
+      return item.smallImage || item.SmallImage // handle both cases
+    }
+    return item.SmallImage
+  }
 
   return (
     <>
-    {loading ? (
+    {isLoading ? (
       <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
           <h1 className="text-white">Loading Movies...</h1>
       </div>
   ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-6">
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
-        <Card key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> :  allContent.map((item, index) => (
+        <Card key={index} isPressable onPress={() => NewonImageClick(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
               // radius="lg"
               width="100%"
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[300px]"
-              src={item.SmallImage}
+              src={getImageUrl(item)}
             />
           </CardBody>
           <CardFooter className="text-small justify-between px-1">
@@ -252,7 +374,7 @@ export  const PcScrollCard = () => {
             <p className="text-default-500">{item.price}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>
@@ -267,26 +389,58 @@ export  const PcScrollCard = () => {
 
 
 
-export  const LargeScrollCard = () => {
+export  const LargeScrollCard = ({currentSeason, movies, currentEpisode, moviesLoading, series, seriesLoading, onImageClick}) => {
+  // const { loading: moviesLoading, movies } = useGetMovies()
+  // const { loading: seriesLoading, series } = useGetSeries()
+
   const navigate = useNavigate()
+
+  const NewonImageClick = (id) => {
+    console.log('clicked')
+    const itemToStore = {
+      ...id,
+      currentEpisode: id.type === 'series' ? currentEpisode : null,
+      currentSeason: id.type === 'series' ? currentSeason : null
+    }
+    localStorage.setItem('CM', JSON.stringify(itemToStore))
+    onImageClick(itemToStore);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+}
+
+
+  const allContent = [
+    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+  ]
+  
+  const isLoading = moviesLoading || seriesLoading
+  
+  const getImageUrl = (item) => {
+    if (item.type === 'series') {
+      return item.smallImage || item.SmallImage // handle both cases
+    }
+    return item.SmallImage
+  }
 
   return (
     <>
-    {loading ? (
+    {isLoading ? (
       <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
           <h1 className="text-white">Loading Movies...</h1>
       </div>
   ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-8">
-      {loading ? <SkeletonColor /> : movies.length === 0 ? <h1>??</h1> :  movies.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => navigate(item.link)} className="bg-black">
+      {isLoading ? <SkeletonColor /> : allContent.length === 0 ? <h1>??</h1> :  allContent.map((item, index) => (
+        <Card shadow="sm" key={index} isPressable onPress={() => NewonImageClick(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
               // radius="lg"
               width="100%"
               alt={truncate(item.movieTitle, 20)}
               className="w-full object-contain h-[350px]"
-              src={item.SmallImage}
+              src={getImageUrl(item)}
             />
           </CardBody>
           <CardFooter className="text-small justify-between px-1">
@@ -294,7 +448,7 @@ export  const LargeScrollCard = () => {
             <p className="text-default-500">{item.price}</p> */}
             <div className="flex flex-row justify-between gap-4">
           <p className="text-default-500">{new Date(item.Released_date).getFullYear()}</p>
-          <p className="text-default-500">{item.Duration}</p>
+          <p className="text-default-500">{item.Duration || ''}</p>
           </div>
           <b>{item.movieTitle}</b>
           </CardFooter>

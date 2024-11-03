@@ -1,5 +1,6 @@
 import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
+import {Select, SelectItem} from "@nextui-org/react";
 
 
 
@@ -29,6 +30,10 @@ const seriesUpload = () => {
         Category: '',
         smallImage: '',  
         largeImage: '',
+        Genre: [],
+        Director: '',
+        Translator: '',
+        Tags: '',
         seasons: [{
             seasonNumber: 1,
             episodes: [{
@@ -40,6 +45,20 @@ const seriesUpload = () => {
         }]
     });
 
+    const animals = [
+        {key: 'Action', label: 'Action'},
+        {key: 'Thriller', label: 'Thriller'},
+        {key: 'Romance', label: 'Romance'},
+        {key: 'Comedy', label: 'Comedy'},
+        {key: 'Adventure', label: 'Adventure'},
+        {key: 'History', label: 'History'},
+        {key: 'Horror', label: 'Horror'},
+        {key: 'Fantasy', label: 'Fantasy'},
+        {key: 'Sci-Fi', label: 'Sci-Fi'},
+        {key: 'Animation', label: 'Animation'},
+        {key: 'Biography', label: 'Biography'},
+    ];
+    
     const handleFileRef1 = () => {
         addRef1.current.click();
     };
@@ -298,7 +317,7 @@ const seriesUpload = () => {
             </div>
             
             <div className='w-full flex flex-col gap-4 mt-4'>
-           {['Studio', 'Production Company', 'Description', 'Trailor'].map((label, index) => (
+           {['Studio', 'Production Company', 'Description', 'Released Date', 'Trailor', 'Download', 'Director', 'Translator', 'Tags'].map((label, index) => (
                <label 
                    key={index}
                    className="input input-bordered flex items-center w-full gap-2"
@@ -311,8 +330,13 @@ const seriesUpload = () => {
                         placeholder={
                             label === 'Studio' ? 'Marvel' : 
                             label === 'Production Company' ? 'Century' : 
-                            label === 'Description' ? '' :  
-                            label === 'Trailor' ? 'https://www.example.com/' : ''
+                            label === 'Description' ? '' : 
+                            label === 'Released Date' ? '10 Oct 2020' : 
+                            label === 'Trailor' ? 'https://www.example.com/' : 
+                            label === 'Download' ? 'https://www.example.com/' : 
+                            label === 'Director' ? 'Christopher Nolan' :
+                            label === 'Translator' ? 'B The Great' :
+                            label === 'Tags' ? 'Avatar, Air, Monarchy' : ''
                         } 
                        onChange={handleChange}
                    />
@@ -334,7 +358,7 @@ const seriesUpload = () => {
                         <option value="Adventure">Drama</option>
                     </select>
 
-                    {/* <select 
+                    <select 
                         name="Type" 
                         className="select select-bordered w-full" 
                         value={input.Type} 
@@ -343,7 +367,23 @@ const seriesUpload = () => {
                         <option value="" disabled>Select Type</option>
                         <option value="Movie">Movie</option>
                         <option value="Serie">Serie</option>
-                    </select> */}
+                    </select>
+
+                    <Select
+      label="Select Genre"
+      placeholder="Select Genre"
+      selectionMode="multiple"
+      className="w-full"
+      name="Genre"
+      value={input.Genre}
+      onChange={(e) => handleChange(e)}
+    >
+      {animals.map((animal) => (
+        <SelectItem key={animal.key}>
+          {animal.label}
+        </SelectItem>
+      ))}
+    </Select>
 
        </div>
 

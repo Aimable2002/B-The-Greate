@@ -24,8 +24,10 @@ const Home = () => {
             setDeviceType('BigMobile');
         }else if (width > 451 && width < 650){
             setDeviceType('LargePhones')
-        } else if (width > 651 && width < 1024) {
+        } else if (width > 651 && width < 767) {
             setDeviceType('ipad');
+        } else if (width > 768 && width < 1024) {
+            setDeviceType('Largeipad');
         } else if (width > 1024 && width < 1920) {
             setDeviceType('pc');
         } else {
@@ -83,6 +85,32 @@ const Home = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   const {loading, movies} = useGetMovies()
+
+  const getRandomMovies = (movies, count) => {
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+};
+
+const getMovieCount = (deviceType) => {
+    switch (deviceType) {
+        case 'mobile':
+            return 4;
+        case 'BigMobile':
+            return 4;
+        case 'LargePhones':
+            return 6;
+        case 'ipad':
+            return 12;
+        case 'Largeipad':
+            return 14;
+        case 'pc':
+            return 24;
+        case 'large':
+            return 48;
+        default:
+            return 4;
+    }
+};
   return (
     <>
     {/* {loading ? (
@@ -99,31 +127,32 @@ const Home = () => {
             { isSmallScreen ? <SlideImage /> : <LSlideImage />}
         </div>
         <div className='px-4 hide-scrollbar py-4 z-0'>
-            <h1 style={{fontSize: '30px'}} className='py-4'>Top 10 Movies To Watch</h1>
+            <h1 style={{fontSize: '30px'}} className='py-4'>Top 10 To Watch</h1>
             <div className='py-4 flex-row justify-evenly'>
                 {/* <Card /> */}
                 {/* <ScrollCard /> */}
                 {/* {isSmallScreen ? <ScrollCard /> : <IpadScrollCard /> : <PcScrollCard /> : <LargeScrollCard />} */}
                 
-                <ScrollComponent />
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, 10) : []} isTopTen={true}/>
                 
             </div>
 
             <div className='py-4 hide-scrollbar flex-row justify-evenly'>
                 {/* <ScrollCard /> */}
                 <div className='w-full flex py-4 flex-row items-center justify-between' style={{paddingTop: '25px'}}>
-                    <h1 style={{fontSize: '30px'}}>Only On Streamit</h1>
+                    <h1 style={{fontSize: '30px'}}>Recent</h1>
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
-                <ScrollComponent />
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+                    isTopTen={true}/>
             </div>
 
-            <div className='py-4 hide-scrollbar flex-row justify-evenly'>
-                {/* <ScrollCard /> */}
+            {/* <div className='py-4 hide-scrollbar flex-row justify-evenly'>
+                {/* <ScrollCard /> 
                 <h1 style={{fontSize: '30px', paddingBottom: '20px'}}>Upcoming Movies</h1>
-                <ScrollComponent />
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, 4) : []} isTopTen={true}/>
                 
-            </div>
+            </div> */}
             <div className='py-4'>
                 {isSmallScreen ? <MiniSlide /> : null}
             </div>
@@ -138,7 +167,8 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
-                <ScrollComponent /> 
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+        isTopTen={true}/> 
             </div>
             <div className='py-4 flex-row justify-evenly'>
                 {/* <h1>Popular</h1> */}
@@ -154,7 +184,8 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
-                <ScrollComponent />
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+        isTopTen={true}/>
             </div>
 
             {/* <div className='py-4 flex-row justify-evenly'>
@@ -172,7 +203,8 @@ const Home = () => {
                     <Link to='/menu'><h1 style={{color: 'red', fontSize: '20px'}}>View All</h1></Link>
                 </div>
                 {/* <ScrollCard /> */}
-                <ScrollComponent /> 
+                <ScrollComponent randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+        isTopTen={true}/> 
             </div>
         </div>
         <div className='px-4 py-4'>

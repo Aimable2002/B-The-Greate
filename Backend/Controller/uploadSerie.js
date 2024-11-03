@@ -34,9 +34,22 @@ export const uploadSerie = async (req, res) => {
         console.log('Received text data:', req.body);
         console.log('Received files:', req.files);
 
-        const { Name, Studio, Production_Company, Category, Description, Released_Date, Trailor, seasons } = req.body
+        const { 
+            Name, 
+            Studio, 
+            Production_Company, 
+            Category, 
+            Description, 
+            Released_Date, 
+            Trailor, 
+            seasons,
+            Genre,
+            Translator,
+            Director,
+            Tags
+        } = req.body
 
-        if(!Name || !Studio || !Production_Company || !Description || !Released_Date || !Category || !Trailor){
+        if(!Name || !Genre || !Translator || !Director || !Tags || !Studio || !Production_Company || !Description || !Released_Date || !Category || !Trailor){
             return res.status(450).json({error : 'fill the field', status: false})
         }
 
@@ -87,6 +100,10 @@ export const uploadSerie = async (req, res) => {
             trailer: Trailor,
             Category: Category,
             seasons: parsedSeasons,
+            Genre: Genre,
+            Translator: Translator,
+            Director: Director,
+            Tags: Tags,
             smallImage: smallImageUrl,
             largeImage: largeImageUrl
         });
@@ -96,7 +113,7 @@ export const uploadSerie = async (req, res) => {
             return res.status(201).json({
                 message: 'Images uploaded successfully',
                 status: true,
-                movie: newSeries, // Optional: return the newly created movie document
+                movie: newSeries, 
             });
 
     } catch (error) {
@@ -177,6 +194,50 @@ export const deleteMovie = async (req, res) => {
 
 
 export const getSeries = async (req, res) => {
-    const series = await Series.find();
+    const series = await Series.find().sort({ createdAt: -1 });
     return res.status(200).json({ series });
+};
+
+export const addSeries = async (req, res) => {
+    const { seriesId, seasons } = req.body;
+    console.log('req.body :', req.body);
+
+    const checkSeries = await Series.findById(seriesId);
+
+    let parsedSeasons;
+        try {
+            parsedSeasons = JSON.parse(seasons);
+        } catch (error) {
+            return res.status(409).json({ 
+                error: 'Invalid seasons data format', 
+                status: false 
+            });
+        }
+
+    return !seriesId || !seasons
+        ? res.status(400).json({ error: 'SeriesId and seasons are required', status: false })
+        : !checkSeries
+        ? res.status(404).json({ error: 'Series not found', status: false })
+        : await Series.findById(seriesId)
+            ? await Series.findByIdAndUpdate(
+                seriesId,
+                { $push: { seasons: parsedSeasons } },
+                { new: true }
+              )
+                ? res.status(200).json({ 
+                    message: 'Seasons added successfully',
+                    status: true 
+                  })
+                : res.status(500).json({ 
+                    error: 'Failed to update series', 
+                    status: false 
+                  })
+            : res.status(404).json({ 
+                error: 'Series not found', 
+                status: false 
+              });
+
+    
+    
+
 };

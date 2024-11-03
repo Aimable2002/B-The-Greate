@@ -10,16 +10,17 @@ const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n-1) + '...' : str;
 }
 
-export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
+export   const ScrollCard = ({ genre }) => {
 
+  console.log('genre :', genre)
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+//   const  = [
+//     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+//     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+//   ]
 
   const navigate = useNavigate()
   
@@ -46,18 +47,21 @@ export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
     return item.SmallImage
   }
 
-  
+  const allContent = (movies, count) => {
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+};
 
 
   return (
     <>
-      {isLoading  ? (
+      {moviesLoading  ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-[90vh] w-[95vw]">No Result Found</div> :  allContent.map((item, index) => (
+      {moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-[90vh] w-[95vw]">No Result Found</div> :  allContent.map((item, index) => (
         <Card   key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -87,8 +91,9 @@ export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
 }
 
 
-export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
+export   const BigScrollCard = ({genre}) => {
   
+  console.log('genre :', genre)
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
@@ -112,10 +117,15 @@ export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
   // console.log('Series:', series);
   // console.log('Genre:', genre);
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+//   const allContent = [
+//     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+//     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+//   ]
+
+const allContent = (movies, count) => {
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+};
 
 
   const isLoading = moviesLoading || seriesLoading
@@ -131,13 +141,13 @@ export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
 
   return (
     <>
-      {isLoading ? (
+      {moviesLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      { isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-[90vh] w-[95vw]">No Result Found</div> :  allContent.map((item, index) => (
+      { moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-[90vh] w-[95vw]">No Result Found</div> :  allContent.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -168,8 +178,9 @@ export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
 
 
 
-export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
+export   const ndBigScrollCard = ({genre}) => {
 
+  console.log('genre :', genre)
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
@@ -190,10 +201,15 @@ export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+//   const allContent = [
+//     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
+//     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
+//   ]
+
+const allContent = (movies, count) => {
+    const shuffled = [...movies].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+};
 
 
   const isLoading = moviesLoading || seriesLoading
@@ -208,14 +224,14 @@ export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
 //shadow="sm"
   return (
     <>
-      {isLoading ? (
+      {moviesLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
+      {moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
         <Card  key={item._id} isPressable onPress={() => handleNovigate(item)} className="bg-black border-none">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -247,7 +263,7 @@ export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
 
 
 
-export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
+export  const IpadScrollCard = () =>  {
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
@@ -267,7 +283,7 @@ export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
+  const allContent = [
     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   ]
@@ -290,7 +306,7 @@ export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-4">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
+      {moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
         <Card  key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -323,7 +339,7 @@ export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
 
 
 
-export  const PcScrollCard = ({randomMovies, isTopTen }) => {
+export  const PcScrollCard = () => {
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
@@ -342,7 +358,7 @@ export  const PcScrollCard = ({randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
+  const allContent = [
     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   ]
@@ -359,13 +375,13 @@ export  const PcScrollCard = ({randomMovies, isTopTen }) => {
 
   return (
     <>
-      {isLoading ? (
+      {moviesLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-6">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
+      {moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
         <Card key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image
@@ -397,7 +413,7 @@ export  const PcScrollCard = ({randomMovies, isTopTen }) => {
 
 
 
-export  const LargeScrollCard = ({randomMovies, isTopTen }) => {
+export  const LargeScrollCard = () => {
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
@@ -416,7 +432,7 @@ export  const LargeScrollCard = ({randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
+  const allContent = [
     ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
     ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   ]
@@ -433,13 +449,13 @@ export  const LargeScrollCard = ({randomMovies, isTopTen }) => {
 
   return (
     <>
-      {isLoading ? (
+      {moviesLoading ? (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
                     <h1 className="text-white">Loading Movies...</h1>
                 </div>
             ) : (
     <div className="gap-2 grid grid-cols-2 hide-scrollbar sm:grid-cols-8">
-      {isLoading ? null : !isLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
+      {moviesLoading ? null : !moviesLoading && allContent.length === 0 ? <div className="skeleton h-32 w-32">No Result Found</div> :  allContent.map((item, index) => (
         <Card shadow="sm" key={index} isPressable onPress={() => handleNovigate(item)} className="bg-black">
           <CardBody className="overflow-visible p-0">
             <Image

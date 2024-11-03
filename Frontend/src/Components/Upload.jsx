@@ -1,6 +1,7 @@
 
 import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
+import {Select, SelectItem} from "@nextui-org/react";
 
 
 const Upload = () => {
@@ -18,8 +19,43 @@ const Upload = () => {
         Trailor: '', 
         Download: '',
         Category: '',
-        Type: ''
+        Type: '',
+        Genre: [],
+        Director: '',
+        Translator: '',
+        Tags: ''
     });
+
+    const animals = [
+        {key: 'Action', label: 'Action'},
+        {key: 'Thriller', label: 'Thriller'},
+        {key: 'Romance', label: 'Romance'},
+        {key: 'Comedy', label: 'Comedy'},
+        {key: 'Adventure', label: 'Adventure'},
+        {key: 'Politics', label: 'Politics'},
+        {key: 'History', label: 'History'},
+        {key: 'Horror', label: 'Horror'},
+        {key: 'Fantasy', label: 'Fantasy'},
+        {key: 'Romance', label: 'Romance'},
+        {key: 'Animation', label: 'Animation'},
+        {key: 'Biography', label: 'Biography'},
+        {key: 'History', label: 'History'},
+
+        {key: 'Drama', label: 'Drama'},
+        {key: 'Mystery', label: 'Mystery'},
+        {key: 'Crime', label: 'Crime'},
+        {key: 'War', label: 'War'},
+        {key: 'Family', label: 'Family'},
+
+        {key: 'Western', label: 'Biography'},
+        {key: 'Music', label: 'History'},
+
+        {key: 'Musical', label: 'Drama'},
+        {key: 'Sport', label: 'Mystery'},
+        {key: 'Adult', label: 'Crime'},
+        {key: 'Adult.18+', label: 'War'},
+        {key: 'Short', label: 'Family'},
+    ];
 
     const handleFileRef1 = () => {
         addRef1.current.click();
@@ -155,7 +191,7 @@ const Upload = () => {
             </div>
             
             <div className='w-full flex flex-col gap-4 mt-4'>
-           {['Studio', 'Production Company', 'Description', 'Released Date', 'Trailor', 'Download'].map((label, index) => (
+           {['Studio', 'Production Company', 'Description', 'Released Date', 'Trailor', 'Download', 'Director', 'Translator', 'Tags'].map((label, index) => (
                <label 
                    key={index}
                    className="input input-bordered flex items-center w-full gap-2"
@@ -171,7 +207,10 @@ const Upload = () => {
                             label === 'Description' ? '' : 
                             label === 'Released Date' ? '10 Oct 2020' : 
                             label === 'Trailor' ? 'https://www.example.com/' : 
-                            label === 'Download' ? 'https://www.example.com/' : ''
+                            label === 'Download' ? 'https://www.example.com/' : 
+                            label === 'Director' ? 'Christopher Nolan' :
+                            label === 'Translator' ? 'B The Great' :
+                            label === 'Tags' ? 'Avatar, Air, Monarchy' : ''
                         } 
                        onChange={handleChange}
                    />
@@ -185,12 +224,12 @@ const Upload = () => {
                         onChange={handleChange}
                     >
                         <option value="" disabled>Select category</option>
-                        <option value="Romance">Romance</option>
+                        {/* <option value="Romance">Romance</option>
                         <option value="Action">Action</option>
-                        <option value="Thrill">Thrill</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Adventure">Adventure</option>
-                        <option value="Adventure">Drama</option>
+                        <option value="Thrill">Thrill</option> */}
+                        <option value="Movie">Movie</option>
+                        <option value="Tv Serie">Tv Serie</option>
+                        <option value="Drama">Drama</option>
                     </select>
 
                     <select 
@@ -203,6 +242,22 @@ const Upload = () => {
                         <option value="Movie">Movie</option>
                         <option value="Serie">Serie</option>
                     </select>
+
+                    <Select
+      label="Select Genre"
+      placeholder="Select Genre"
+      selectionMode="multiple"
+      className="w-full"
+      name="Genre"
+      value={input.Genre}
+      onChange={(e) => handleChange(e)}
+    >
+      {animals.map((animal) => (
+        <SelectItem key={animal.key}>
+          {animal.label}
+        </SelectItem>
+      ))}
+    </Select>
 
        </div>
 

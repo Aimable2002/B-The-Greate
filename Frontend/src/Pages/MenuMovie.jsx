@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import ButtonAppBar from '../Components/Header'
-import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard, BigScrollCard, ndBigScrollCard } from '../Components/ScrollCard'
-
+import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard, BigScrollCard, ndBigScrollCard } from '../Components/OtherCard'
+import { useLocation } from 'react-router-dom';
 const MenuMovie = () => {
 
-  const movieArray = ['All', 'Action', 'Adventure', 'Comedy', 'Drama', 'Thrill', 'Horror']
+  const location = useLocation();
+  const selectedGenre = location.state?.selectedGenre || 'All';
+
+  const movieArray = ['All', 'Action', 'Adventure', 'Romance', 'Fantasy', 'Comedy', 'Drama', 'Thrill', 'Horror', 'Mystery', 'Crime', 'Thriller', 'War', 'Animation', 'Family', 'History', 'Western', 'Music', 'Musical', 'Sport', 'Biography', 'Adult', 'Adult.18+', 'Short', 'Short']
     // const RandomMovieArray = movieArray.sort(() => Math.random() - 0.5).slice(0, 4);
 
     const [isAction, setIsAction] = useState(false)
@@ -53,6 +56,13 @@ const MenuMovie = () => {
       }
     }
 
+    useEffect(() => {
+      // Set the initial genre based on navigation state
+      if (selectedGenre) {
+          handleClick(selectedGenre);
+      }
+  }, [selectedGenre]);
+
     const [deviceType, setDeviceType] = useState(''); 
 
     const handleResize = () => {
@@ -84,25 +94,25 @@ const MenuMovie = () => {
     let ScrollComponent;
     switch (deviceType) {
         case 'mobile':
-            ScrollComponent = ScrollCard;
+            ScrollComponent = (props) => <ScrollCard genre={isClicked} {...props} />;
             break;
         case 'BigMobile': 
-            ScrollComponent = BigScrollCard;
+            ScrollComponent = (props) => <BigScrollCard genre={isClicked} {...props} />;
             break;
         case 'LargePhones':
-            ScrollComponent = ndBigScrollCard
+            ScrollComponent = (props) => <ndBigScrollCard genre={isClicked} {...props} />;
             break;
         case 'ipad':
-            ScrollComponent = IpadScrollCard;
+            ScrollComponent = (props) => <IpadScrollCard genre={isClicked} {...props} />;
             break;
         case 'pc':
-            ScrollComponent = PcScrollCard;
+            ScrollComponent = (props) => <PcScrollCard genre={isClicked} {...props} />;
             break;
         case 'large':
-            ScrollComponent = LargeScrollCard;
+            ScrollComponent = (props) => <LargeScrollCard genre={isClicked} {...props} />;
             break;
         default:
-            ScrollComponent = ScrollCard; 
+            ScrollComponent = (props) => <ScrollCard genre={isClicked} {...props} />; 
     }
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 769);
   useEffect(() => {

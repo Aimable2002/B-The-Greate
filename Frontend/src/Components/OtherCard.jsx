@@ -10,16 +10,31 @@ const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n-1) + '...' : str;
 }
 
-export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
+export   const ScrollCard = ({ genre }) => {
 
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+        ...(movies?.filter(item => {
+          // Handle Genre as string
+          if (!item?.Genre) return false;
+          // Split the genres and check if any match
+          const genres = item.Genre.split(',').map(g => g.trim().toLowerCase());
+          return genres.includes(genre.toLowerCase());
+        }) || []),
+        ...(series?.series?.filter(item => {
+          if (!item?.Genre) return false;
+          const genres = item.Genre.split(',').map(g => g.trim().toLowerCase());
+          return genres.includes(genre.toLowerCase());
+        }) || [])
+      ];
 
   const navigate = useNavigate()
   
@@ -40,10 +55,11 @@ export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
   
@@ -87,7 +103,7 @@ export   const ScrollCard = ({ genre, randomMovies, isTopTen  }) => {
 }
 
 
-export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
+export   const BigScrollCard = ({genre}) => {
   
 
   const { loading: moviesLoading, movies } = useGetMovies()
@@ -112,19 +128,35 @@ export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
   // console.log('Series:', series);
   // console.log('Genre:', genre);
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+        ...(movies?.filter(item => {
+          // Handle Genre as string
+          if (!item?.Genre) return false;
+          // Split the genres and check if any match
+          const genres = item.Genre.split(',').map(g => g.trim().toLowerCase());
+          return genres.includes(genre.toLowerCase());
+        }) || []),
+        ...(series?.series?.filter(item => {
+          if (!item?.Genre) return false;
+          const genres = item.Genre.split(',').map(g => g.trim().toLowerCase());
+          return genres.includes(genre.toLowerCase());
+        }) || [])
+      ];
 
 
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
   
@@ -168,7 +200,7 @@ export   const BigScrollCard = ({genre, randomMovies, isTopTen }) => {
 
 
 
-export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
+export   const ndBigScrollCard = ({genre}) => {
 
 
   const { loading: moviesLoading, movies } = useGetMovies()
@@ -190,19 +222,25 @@ export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+        ...(movies?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || []),
+        ...(series?.series?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || [])
+      ];
 
 
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
 //shadow="sm"
@@ -247,7 +285,7 @@ export   const ndBigScrollCard = ({genre, randomMovies, isTopTen }) => {
 
 
 
-export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
+export  const IpadScrollCard = () =>  {
 
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
@@ -267,19 +305,25 @@ export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+        ...(movies?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || []),
+        ...(series?.series?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || [])
+      ];
 
 
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
   return (
@@ -323,7 +367,7 @@ export  const IpadScrollCard = ({randomMovies, isTopTen }) =>  {
 
 
 
-export  const PcScrollCard = ({randomMovies, isTopTen }) => {
+export  const PcScrollCard = () => {
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
@@ -342,19 +386,25 @@ export  const PcScrollCard = ({randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+        ...(movies?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || []),
+        ...(series?.series?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || [])
+      ];
 
 
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
   return (
@@ -397,7 +447,7 @@ export  const PcScrollCard = ({randomMovies, isTopTen }) => {
 
 
 
-export  const LargeScrollCard = ({randomMovies, isTopTen }) => {
+export  const LargeScrollCard = () => {
   const { loading: moviesLoading, movies } = useGetMovies()
   const { loading: seriesLoading, series } = useGetSeries()
 
@@ -416,19 +466,26 @@ export  const LargeScrollCard = ({randomMovies, isTopTen }) => {
   //   ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
   // ]
 
-  const allContent = isTopTen ? randomMovies :  [
-    ...(movies?.map(movie => ({ ...movie, type: 'movie' })) || []),
-    ...(series.series?.map(show => ({ ...show, type: 'series' })) || [])
-  ]
+  const allContent = genre === 'All' 
+    ? [
+        ...(movies || []),
+        ...(series?.series || [])
+      ]
+    : [
+      
+        ...(movies?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || []),
+        ...(series?.series?.filter(item => item.Genre.toLowerCase().includes(genre.toLowerCase())) || [])
+      ];
 
 
   const isLoading = moviesLoading || seriesLoading
 
   const getImageUrl = (item) => {
-    if (item.type === 'series') {
-      return item.smallImage || item.SmallImage // handle both cases
-    }
-    return item.SmallImage
+    // if (item.type === 'series') {
+    //   return item.smallImage || item.SmallImage // handle both cases
+    // }
+    // return item.SmallImage
+    return item.smallImage || item.SmallImage || item.largeImage || item.LargeImage || '';
   }
 
   return (

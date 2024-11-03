@@ -14,6 +14,6 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    exclude: ['events', 'fs', 'buffer'], // Exclude problematic modules
+    exclude: ['events', 'fs', 'buffer'], 
   },
 })

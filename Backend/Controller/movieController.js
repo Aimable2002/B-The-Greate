@@ -4,7 +4,7 @@ import Movies from "../Modal/MoviesModel.js"
 
 export const getMovies = async (req, res) => {
     try{
-        const getAllMovies = await Movies.find()
+        const getAllMovies = await Movies.find().sort({ createdAt: -1 })
 
         // console.log('all Movies :', getAllMovies)
         return res.status(200).json(getAllMovies)

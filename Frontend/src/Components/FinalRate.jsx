@@ -5,11 +5,14 @@ import { Button } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import useGetMovies from '../hook/useGetMovies';
 import SkeletonColor from '../Skeleton/CardSkeleton';
+import { useNavigate } from 'react-router-dom';
 
 const FinalRate = () => {
     const [value] = useState(5);
     const { loading, movies } = useGetMovies();
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (loading || movies.length === 0) return;
@@ -26,6 +29,14 @@ const FinalRate = () => {
     }
 
     const currentMovie = movies[currentIndex] || {};
+
+    const handleNovigate = (id) => {
+
+        console.log('_id :', id)
+        localStorage.setItem('CM', JSON.stringify(id))
+        navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+     
+      }
 
     return (
         <>
@@ -63,6 +74,7 @@ const FinalRate = () => {
                     <Button 
                         variant="contained"
                         sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                        onClick={() => handleNovigate(currentMovie)}
                     >
                         Stream <PlayArrowIcon />
                     </Button>

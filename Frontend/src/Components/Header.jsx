@@ -27,7 +27,7 @@ export default function ButtonAppBar() {
         <div className=' flex justify-between w-full items-center'>
         <div className='flex flex-row gap-1'>
             <h1 style={{color: 'red'}}>B</h1>
-            <Link to='/'><h1 style={{color: 'red'}}>Agasobanuye</h1></Link>
+            <Link to='/'><h1 style={{color: 'red'}}>AgasobanuyeStore</h1></Link>
         </div>
         <div className='flex justify-between gap-6'>
             <i><SearchIcon /></i>

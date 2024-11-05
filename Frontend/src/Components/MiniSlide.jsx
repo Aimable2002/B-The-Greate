@@ -1,6 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import { Button } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -11,6 +12,8 @@ const SlideImage = () => {
     const [value] = useState(5);
     const { loading, movies } = useGetMovies();
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (loading || movies.length === 0) return;
@@ -27,6 +30,14 @@ const SlideImage = () => {
     }
 
     const currentMovie = movies[currentIndex] || {};
+
+    const handleNovigate = (id) => {
+
+        console.log('_id :', id)
+        localStorage.setItem('CM', JSON.stringify(id))
+        navigate(`/view/${id._id}sfddfdghfcsdcnchsdshudsfjj`)
+     
+      }
 
     return (
         <>
@@ -64,6 +75,7 @@ const SlideImage = () => {
                     <Button 
                         variant="contained"
                         sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                        onClick={() => handleNovigate(currentMovie)}
                     >
                         Stream <PlayArrowIcon />
                     </Button>

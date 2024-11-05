@@ -7,15 +7,15 @@ const Footer = () => {
   return (
     <div className='w-full flex flex-col'>
         <div className='flex flex-row gap-2' style={{color: 'red'}}>
-            <h1>S</h1>
-            <h1>Agasobanuye</h1>
+            <h1>B</h1>
+            <h1>AgasobanuyeStore</h1>
         </div>
         <div className='flex flex-row py-4'>
             <h1>Email: </h1>
-            <h1>Example@gmail.com</h1>
+            <h1>webdev534@gmail.com</h1>
         </div>
         <h1 className='py-2'>CUSTOMER SERVICE</h1>
-        <h1>+250 555 5555</h1>
+        <h1>+250 787 4384</h1>
         <h className='py-4'>Quick Links</h>
         <i>About Us</i>
         <i>Blog</i>
@@ -38,7 +38,7 @@ const Footer = () => {
         </div>
         <h1>Watch List</h1>
         <p className='py-4'>
-            © 2024 <i style={{color: 'red'}}>STREAMIT</i>. All Rights Reserved. All videos and shows on this platform are trademarks of, and all related images and content are the property of, Streamit Inc. Duplication and copy of this is strictly prohibited.
+            © 2024 <i style={{color: 'red'}}>Reuble Ltd</i>. All Rights Reserved and copyrights  belong to Reuble Ltd company
         </p>
     </div>
   )

@@ -25,9 +25,9 @@ const View = () => {
 
     const [expandedIds, setExpandedIds] = useState({});
 
-    const [movieCount, setMovieCount] = useState(getMovieCount(deviceType));
+    // const [movieCount, setMovieCount] = useState(getMovieCount(deviceType));
 
-    const [seriesCount, setSeriesCount] = useState(getSeriesCount(deviceType));
+    // const [seriesCount, setSeriesCount] = useState(getSeriesCount(deviceType));
 
 
   const toggleDescription = (id, event) => {
@@ -164,6 +164,11 @@ const View = () => {
 
     const handleTagClick = (genre) => {
         navigate('/menu', { state: { selectedGenre: genre } });
+    };
+
+    const getRandomMovies = (movies, count) => {
+        const shuffled = [...movies].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
     };
 
 

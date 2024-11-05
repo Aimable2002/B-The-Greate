@@ -17,8 +17,12 @@ import MovieIcon from '@mui/icons-material/Movie';
 import GradeIcon from '@mui/icons-material/Grade';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import useLogout from '../hook/useLogout';
 
 export default function Menu({ open, onClose }) {
+
+    const { logout } = useLogout();
+
     const list = (
         <Box
             sx={{
@@ -52,7 +56,7 @@ export default function Menu({ open, onClose }) {
             <List>
                 {[  
                     { text: 'Saved', icon: <GradeIcon /> },
-                    { text: 'Logout', icon: <LogoutIcon /> },
+                    { text: 'Logout', icon: <LogoutIcon />, onClick: logout },
                     { text: 'Delete Account', icon: <DeleteForeverIcon /> },
                 ].map(({ text, icon }) => (
                     <ListItem key={text} disablePadding>

@@ -111,6 +111,8 @@ const getMovieCount = (deviceType) => {
             return 4;
     }
 };
+
+  
   return (
     <>
     {/* {loading ? (

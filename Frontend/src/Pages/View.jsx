@@ -25,6 +25,11 @@ const View = () => {
 
     const [expandedIds, setExpandedIds] = useState({});
 
+    const [movieCount, setMovieCount] = useState(getMovieCount(deviceType));
+
+    const [seriesCount, setSeriesCount] = useState(getSeriesCount(deviceType));
+
+
   const toggleDescription = (id, event) => {
     event.stopPropagation(); // Prevent card click when clicking show more/less
     setExpandedIds(prev => ({
@@ -160,6 +165,29 @@ const View = () => {
     const handleTagClick = (genre) => {
         navigate('/menu', { state: { selectedGenre: genre } });
     };
+
+
+    const getMovieCount = (deviceType) => {
+        switch (deviceType) {
+            case 'mobile':
+                return 4;
+            case 'BigMobile':
+                return 4;
+            case 'LargePhones':
+                return 6;
+            case 'ipad':
+                return 12;
+            case 'Largeipad':
+                return 14;
+            case 'pc':
+                return 24;
+            case 'large':
+                return 48;
+            default:
+                return 4;
+        }
+    };
+
 
   return (
     <div className='w-full flex flex-col overflow-auto'>
@@ -333,11 +361,32 @@ const View = () => {
             {/* <div className='w-full flex flex-col'> */}
                 <h1 style={{paddingBottom: '20px'}}>Newest Movies</h1>
                 {/* <ScrollComponent movies={movies} onImageClick={setCurrentMovie}/> */}
-                <ScrollComponent movies={movies} currentSeason={currentSeason} moviesLoading={moviesLoading} series={series} seriesLoading={seriesLoading} currentEpisode={ currentEpisode} onImageClick={handleMovieClick}/>
+                <ScrollComponent 
+                    movies={movies} 
+                    currentSeason={currentSeason} 
+                    moviesLoading={moviesLoading} 
+                    series={series} 
+                    seriesLoading={seriesLoading} 
+                    currentEpisode={ currentEpisode} 
+                    onImageClick={handleMovieClick}
+                    randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+                    isTopTen={true}
+                    />
             {/* </div> */}
             <div className='w-full py-4 flex flex-col'>
-                <h1 style={{paddingBottom: '20px'}}>Recommended</h1>
-                <ScrollComponent movies={movies} currentSeason={currentSeason} moviesLoading={moviesLoading} series={series} seriesLoading={seriesLoading} currentEpisode={currentEpisode} onImageClick={handleMovieClick}/>
+                <h1 style={{paddingBottom: '20px'}}>Recommended For You</h1>
+                <ScrollComponent 
+                    movies={movies} 
+                    currentSeason={currentSeason} 
+                    moviesLoading={moviesLoading} 
+                    series={series} 
+                    seriesLoading={seriesLoading} 
+                    currentEpisode={currentEpisode} 
+                    onImageClick={handleMovieClick}
+                    randomMovies={movies ? getRandomMovies(movies, getMovieCount(deviceType)) : []} 
+                    isTopTen={true}
+                    />
+
             </div>
             <div style={{paddingTop: '20px'}}>
                 <Footer />

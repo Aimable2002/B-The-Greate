@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import ButtonAppBar from '../Components/Header'
 import { Button, Image } from '@nextui-org/react'
 import Rating from '@mui/material/Rating';
-import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ndScrollCard';
+import { ScrollCard, IpadScrollCard, PcScrollCard, LargeScrollCard } from '../Components/ScrollCard';
 import Footer from '../Components/Footer';
 import useGetMovies from '../hook/useGetMovies';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -200,7 +200,7 @@ const View = () => {
             <ButtonAppBar />
         </div>
         <div className='py-4 px-4 mt-12 flex flex-col'>
-
+        <div className='max-w-[600px] max-h-[400px]'>
         {isPlaying ? (
             <>
             {/* {console.log('Debug iframe values:', {
@@ -212,7 +212,7 @@ const View = () => {
                     : (id?.movieTitle || '')
             })} */}
                     <iframe
-                    className="w-full h-[200px]"
+                    className="w-full h-[300px]"
                     src= {extractSrcFromIframe(id.trailer) || id.Trailor} // 'https://www.youtube.com/embed/1Q8fG0TtVAY?si=xsEpZSMGPXLlwT10'// // Use the extracted video ID
                     title={currentEpisode     
                         ? `${id?.movieTitle || ''} - Season ${currentSeason} Episode ${currentEpisode
@@ -229,11 +229,12 @@ const View = () => {
                 radius="lg"
                 width="100%"
                 alt={id.LargeImage || id.largeImage}
-                className="w-full object-cover h-[200px]"
+                className="w-full object-cover h-[300px]"
                 src={id.LargeImage || id.largeImage}
             />
 
                 )}
+                </div>
             <div className='w-full flex flex-row justify-between items-center'>
                 {/* <h1 style={{fontSize: '20px'}} className='py-4'>{id.movieTitle || id.movieTitle && currentEpisode ? `${id.movieTitle} - S${currentSeason}E${currentEpisode?.episodeNumber || ''}` : ''}</h1> */}
                 <h1 style={{fontSize: '20px'}} className='py-4'>
@@ -293,7 +294,6 @@ const View = () => {
                     </button>
                 )}
             </div>
-
 
 {id.type === 'series' && id.seasons && (
     <div className='w-full flex flex-col gap-4 mb-6'>
@@ -368,6 +368,7 @@ const View = () => {
                 {/* <ScrollComponent movies={movies} onImageClick={setCurrentMovie}/> */}
                 <ScrollComponent 
                     movies={movies} 
+                    // movies={getRandomMovies(movies, getMovieCount(deviceType))}
                     currentSeason={currentSeason} 
                     moviesLoading={moviesLoading} 
                     series={series} 
@@ -382,6 +383,7 @@ const View = () => {
                 <h1 style={{paddingBottom: '20px'}}>Recommended For You</h1>
                 <ScrollComponent 
                     movies={movies} 
+                    // movies={getRandomMovies(movies, getMovieCount(deviceType))}
                     currentSeason={currentSeason} 
                     moviesLoading={moviesLoading} 
                     series={series} 

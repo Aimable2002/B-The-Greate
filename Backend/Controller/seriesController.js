@@ -56,7 +56,6 @@ const processUpdate = async (req, res, movieId) => {
     const { movieTitle, trailor} = req.body;
     const updateData = { movieTitle, trailor };
 
-    // Process images if they exist
     if (req.files && Object.keys(req.files).length > 0) {
         for (const [fieldName, files] of Object.entries(req.files)) {
             if (files[0]?.buffer) {

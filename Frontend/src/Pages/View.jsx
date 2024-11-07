@@ -155,7 +155,6 @@ const View = () => {
         } else {
             console.error('Download URL not available');
             Alert.alert('Download URL not available');
-            // You might want to show a user-friendly error message here
         }
     };
     const [expandedDescription, setExpandedDescription] = useState(false);

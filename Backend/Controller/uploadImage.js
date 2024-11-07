@@ -5,11 +5,6 @@ import Movies from "../Modal/MoviesModel.js";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// cloudinary.config({
-//     cloud_name: 'your_cloud_name',
-//     api_key: 'your_api_key',
-//     api_secret: 'your_api_secret',
-// });
 
 const uploadToCloudinary = (buffer, folderName) => {
     return new Promise((resolve, reject) => {

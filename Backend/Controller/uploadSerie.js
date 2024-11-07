@@ -140,7 +140,6 @@ export const editChanges = async (req, res) => {
     }
 };
 
-// Helper function to handle the image upload logic
 const handleImageUpload = async (req, res, movieId) => {
     const checkMovie = await Movies.findById(movieId);
     
@@ -149,12 +148,10 @@ const handleImageUpload = async (req, res, movieId) => {
         : await processUpdate(req, res, movieId);
 };
 
-// Helper function to process the update
 const processUpdate = async (req, res, movieId) => {
     const { movieTitle, trailor, download } = req.body;
     const updateData = { movieTitle, trailor, download };
 
-    // Process images if they exist
     if (req.files && Object.keys(req.files).length > 0) {
         for (const [fieldName, files] of Object.entries(req.files)) {
             if (files[0]?.buffer) {

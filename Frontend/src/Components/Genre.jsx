@@ -67,11 +67,11 @@ const images = [
 const Genre = () => {
 
   return (
-    <div className="flex overflow-x-auto space-x-2"> {/* Enable horizontal scrolling */}
-      {images.map((image, index) => ( // You can adjust the number of items here
+    <div className="flex overflow-x-auto space-x-2"> 
+      {images.map((image, index) => ( 
         <div 
           key={index}
-          className='w-[50%] h-[100] bg-slate-50 flex items-center justify-center overflow-hidden rounded' // Set width to 30%
+          className='w-[50%] h-[100] bg-slate-50 flex items-center justify-center overflow-hidden rounded' 
           style={{ 
             backgroundImage: `url(${image.src})`, 
             backgroundSize: 'contain',

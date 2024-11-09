@@ -12,7 +12,7 @@ const useGetSeries = () => {
             const fetchMovies = async () => {
               try {
                 setLoading(true);
-                const res = await axios.get('/api/series');
+                const res = await axios.get('https://b-the-greate.onrender.com/api/series');
                 const data = res.data;
           
                 if (!data) {

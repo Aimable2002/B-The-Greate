@@ -7,7 +7,7 @@ const useLogout = () => {
   const logout = async () => {
     setLoading(true)
     try{
-        const res = await axios.post('/api/auth/logout')
+        const res = await axios.post('https://b-the-greate.onrender.com/api/auth/logout')
 
     const data = res.data;
 

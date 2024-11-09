@@ -9,7 +9,7 @@ const useSignup = () => {
     if(!success)return
     setLoading(true);
     try {
-      const res = await axios.post('/api/auth/signup', {
+      const res = await axios.post('https://b-the-greate.onrender.com/api/auth/signup', {
         fullName,
         userName,
         age,

@@ -11,7 +11,7 @@ const useGetMovies = () => {
         const fetchMovies = async () => {
           try {
             setLoading(true);
-            const res = await axios.get('/api/movies');
+            const res = await axios.get('https://b-the-greate.onrender.com/api/movies');
             const data = res.data;
       
             if (!data) {
